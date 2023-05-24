@@ -1,0 +1,59 @@
+name: Publish Firefox Add-ons
+
+on:
+  workflow_call:
+    source-dir:
+      required: true
+      type: string
+    script:
+      required: true
+      type: string
+    secrets:
+      FIREFOX_API_KEY:
+        required: true
+      FIREFOX_API_SECRET:
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Test
+        run: npm run test
+
+  publish:
+    needs: build
+    environment: chrome
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          cache: "npm"
+          cache-dependency-path: ./package-lock.json
+          node-version: 18
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run ${{ inputs.script }}
+
+      - name: Deploy to Firefox Add-ons
+        run: npx web-ext sign --use-submission-api --channel=listed --source-dir ${{ inputs.source_dir }}
+        env:
+          WEB_EXT_API_KEY: ${{ secrets.FIREFOX_API_KEY }}
+          WEB_EXT_API_SECRET: ${{ secrets.FIREFOX_API_SECRET }}
