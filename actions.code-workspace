@@ -1,0 +1,18 @@
+
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+		"[yaml][json]": {
+			"editor.formatOnSave": true,
+			"editor.tabSize": 4,
+			"editor.rulers": [100]
+		},
+		"editor.tabSize": 4,
+		"files.trimTrailingWhitespace": true,
+	},
+}
