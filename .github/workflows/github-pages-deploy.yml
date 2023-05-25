@@ -4,11 +4,9 @@ on:
   workflow_call:
     inputs:
       node-version:
-        required: true
         type: number
         default: 16
       command:
-        required: true
         type: string
         default: npm run build
       target-branch:
@@ -18,8 +16,7 @@ on:
         required: true
         type: string
       keep-history:
-        required: true
-        type: string
+        type: boolean
         default: true
 
 jobs:
