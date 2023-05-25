@@ -2,12 +2,16 @@ name: Publish Chrome Web Store
 
 on:
   workflow_call:
-    source_dir:
-      required: true
-      type: string
-    script:
-      required: true
-      type: string
+    inputs:
+      node-version:
+        required: true
+        type: number
+      source-dir:
+        required: true
+        type: string
+      command:
+        required: true
+        type: string
     secrets:
       CHROME_EXTENSION_ID:
         required: true
@@ -27,7 +31,7 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: ${{ inputs.node-version }}
 
       - name: Install dependencies
         run: npm ci
@@ -47,17 +51,17 @@ jobs:
         with:
           cache: "npm"
           cache-dependency-path: ./package-lock.json
-          node-version: 18
+          node-version: ${{ inputs.node-version }}
           registry-url: "https://registry.npmjs.org"
 
       - name: Install dependencies
         run: npm ci
 
       - name: Build
-        run: npm run ${{ inputs.script }}
+        run: npm run ${{ inputs.command }}
 
       - name: Deploy to Chrome Web Store
-        run: npx chrome-webstore-upload upload --auto-publish --source ${{ inputs.source_dir }}
+        run: npx chrome-webstore-upload upload --auto-publish --source ${{ inputs.source-dir }}
         env:
           EXTENSION_ID: ${{ secrets.CHROME_EXTENSION_ID }}
           CLIENT_ID: ${{ secrets.CHROME_CLIENT_ID }}
