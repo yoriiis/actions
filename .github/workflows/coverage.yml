@@ -2,6 +2,10 @@ name: Coverage
 
 on:
   workflow_call:
+    inputs:
+      command:
+        type: string
+        default: npm run test:unit
 
 jobs:
   coverage:
