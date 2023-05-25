@@ -59,7 +59,7 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: ${{ inputs.-build }}
+        run: ${{ inputs.command-build }}
 
       - name: Deploy to Chrome Web Store
         run: npx chrome-webstore-upload upload --auto-publish --source ${{ inputs.source-dir }}
