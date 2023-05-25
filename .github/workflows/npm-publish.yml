@@ -6,6 +6,7 @@ on:
       node-version:
         required: true
         type: number
+        default: 16
     secrets:
       NPM_TOKEN:
         required: true
