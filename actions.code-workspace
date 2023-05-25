@@ -1,4 +1,3 @@
-
 {
 	"folders": [
 		{
@@ -7,18 +6,23 @@
 	],
 	"settings": {
 		"editor.defaultFormatter": "esbenp.prettier-vscode",
-		"[yaml][json]": {
+		"[json]": {
+			"editor.tabSize": 4,
 			"editor.formatOnSave": true,
-			"editor.rulers": [100]
-
+			"editor.rulers": [
+				100
+			]
 		},
 		"[yaml]": {
 			"editor.tabSize": 2,
+			"editor.detectIndentation": true,
+			"editor.insertSpaces": true,
+			"editor.autoIndent": "none"
 		},
-		"[json]": {
-			"editor.tabSize": 4,
+		"files.associations": {
+			"*.yaml": "yaml",
+			"*.yml": "yaml"
 		},
-		"editor.tabSize": 4,
-		"files.trimTrailingWhitespace": true,
-	},
+		"files.trimTrailingWhitespace": true
+	}
 }
