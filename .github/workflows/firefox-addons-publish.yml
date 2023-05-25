@@ -2,7 +2,7 @@ name: Publish Firefox Add-ons
 
 on:
   workflow_call:
-    input:
+    inputs:
       node-version:
         required: true
         type: number
@@ -10,7 +10,7 @@ on:
       source-dir:
         required: true
         type: string
-      command:
+      command-build:
         required: true
         type: string
     secrets:
@@ -55,7 +55,7 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: ${{ inputs.command }}
+        run: ${{ inputs.command-build }}
 
       - name: Deploy to Firefox Add-ons
         run: npx web-ext sign --use-submission-api --channel=listed --source-dir ${{ inputs.source-dir }}

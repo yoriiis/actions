@@ -6,7 +6,7 @@ on:
       node-version:
         type: number
         default: 16
-      command:
+      command-build:
         type: string
         default: npm run build
       target-branch:
@@ -34,7 +34,7 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: ${{ inputs.command }}
+        run: ${{ inputs.command-build }}
 
       - name: Deploy to Github Pages
         uses: crazy-max/ghaction-github-pages@v3

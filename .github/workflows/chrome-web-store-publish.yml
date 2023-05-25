@@ -10,7 +10,7 @@ on:
       source-dir:
         required: true
         type: string
-      command:
+      command-build:
         required: true
         type: string
     secrets:
@@ -59,7 +59,7 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: ${{ inputs.command }}
+        run: ${{ inputs.-build }}
 
       - name: Deploy to Chrome Web Store
         run: npx chrome-webstore-upload upload --auto-publish --source ${{ inputs.source-dir }}

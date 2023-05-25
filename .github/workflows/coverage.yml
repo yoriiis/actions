@@ -3,7 +3,7 @@ name: Coverage
 on:
   workflow_call:
     inputs:
-      command:
+      command-test:
         type: string
         default: npm run test:unit
 
@@ -23,7 +23,7 @@ jobs:
         run: npm ci
 
       - name: Test
-        run: ${{ inputs.command }}
+        run: ${{ inputs.command-test }}
 
       - name: Coveralls
         uses: coverallsapp/github-action@v2
