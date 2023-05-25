@@ -9,8 +9,14 @@
 		"editor.defaultFormatter": "esbenp.prettier-vscode",
 		"[yaml][json]": {
 			"editor.formatOnSave": true,
-			"editor.tabSize": 4,
 			"editor.rulers": [100]
+
+		},
+		"[yaml]": {
+			"editor.tabSize": 2,
+		},
+		"[json]": {
+			"editor.tabSize": 4,
 		},
 		"editor.tabSize": 4,
 		"files.trimTrailingWhitespace": true,
