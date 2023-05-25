@@ -34,7 +34,7 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: npm run ${{ inputs.command }}
+        run: ${{ inputs.command }}
 
       - name: Deploy to Github Pages
         uses: crazy-max/ghaction-github-pages@v3

@@ -55,7 +55,7 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: npm run ${{ inputs.command }}
+        run: ${{ inputs.command }}
 
       - name: Deploy to Firefox Add-ons
         run: npx web-ext sign --use-submission-api --channel=listed --source-dir ${{ inputs.source-dir }}
