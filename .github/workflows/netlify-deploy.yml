@@ -32,13 +32,11 @@ jobs:
           node-version: ${{ inputs.node-version }}
 
       - name: Install dependencies
-        run: |
-          npm ci
-          npm i -g netlify-cli
+        run: npm ci
 
       - name: Build
         run: ${{ inputs.command-build }}
 
       - name: Deploy to Netlify
         run: |
-          netlify deploy --prod --site ${{ secrets.NETLIFY_APP_ID }} --auth ${{ secrets.NETLIFY_AUTH_TOKEN }} --dir ${{ inputs.build-dir }} --message "Deploy to Netlify"
+          npx netlify deploy --prod --site ${{ secrets.NETLIFY_APP_ID }} --auth ${{ secrets.NETLIFY_AUTH_TOKEN }} --dir ${{ inputs.build-dir }} --message "Deploy to Netlify"
