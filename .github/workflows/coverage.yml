@@ -3,6 +3,9 @@ name: Coverage
 on:
   workflow_call:
     inputs:
+      node-version:
+        type: number
+        default: 16
       command-test:
         type: string
         default: npm run test:unit
@@ -16,7 +19,7 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: ${{ inputs.node-version }}
           registry-url: https://registry.npmjs.org/
 
       - name: Install dependencies
