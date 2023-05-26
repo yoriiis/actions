@@ -27,14 +27,13 @@ jobs:
       run:
         working-directory: ${{ inputs.working-directory }}
     steps:
-      - uses: actions/checkout@v3
-
       - name: Set GIT to use EOL LF
         if: ${{ inputs.working-directory }} == './'
         run: |
-          echo $PWD
           git config --global core.autocrlf false
           git config --global core.eol lf
+
+      - uses: actions/checkout@v3
 
       - uses: actions/setup-node@v3
         with:
