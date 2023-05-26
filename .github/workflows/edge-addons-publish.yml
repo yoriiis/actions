@@ -13,8 +13,6 @@ on:
       command-build:
         required: true
         type: string
-      publication-note:
-        type: string
     secrets:
       EDGE_PRODUCT_ID:
         required: true
@@ -86,17 +84,9 @@ jobs:
             --upload-file "package.zip" \
             --verbose "https://api.addons.microsoftedge.microsoft.com/v1/products/${{ secrets.EDGE_PRODUCT_ID }}/submissions/draft/package"
 
-      - name: Create publication note
-        id: json-note
-        run: |
-          escaped_content=$(printf '%s\n' "${{ inputs.publication-note }}" | sed 's/\\/\\\\/g; s/"/\\"/g')
-          json_data="{ \"notes\":\"$escaped_content\" }"
-          echo "JSON_NOTE=${json_data}" >> "$GITHUB_OUTPUT"
-
       - name: Publish package
         run: |
           curl --header "Authorization: Bearer ${{ steps.access-token.outputs.ACCESS_TOKEN }}" \
             --request POST \
-            --data '${{ steps.json-note.outputs.JSON_NOTE }}' \
             --verbose \
             https://api.addons.microsoftedge.microsoft.com/v1/products/${EDGE_PRODUCT_ID}/submissions
