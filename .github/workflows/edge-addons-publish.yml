@@ -64,7 +64,7 @@ jobs:
         run: ${{ inputs.command-build }}
 
       - name: Create package zip
-        run: zip --recurse-paths package.zip ./web/*
+        run: zip --recurse-paths package.zip ${{ inputs.source-dir }}
 
       - name: Get API access token
         id: access-token
