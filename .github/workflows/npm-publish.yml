@@ -23,6 +23,8 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
+          cache: "npm"
+          cache-dependency-path: ./package-lock.json
           node-version: ${{ inputs.node-version }}
 
       - name: Install dependencies
@@ -41,6 +43,8 @@ jobs:
 
       - uses: actions/setup-node@v3
         with:
+          cache: "npm"
+          cache-dependency-path: ./package-lock.json
           node-version: ${{ inputs.node-version }}
           registry-url: https://registry.npmjs.org/
 
