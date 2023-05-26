@@ -27,7 +27,7 @@ jobs:
       run:
         working-directory: ${{ inputs.working-directory }}
     steps:
-      - name: Set GIT to use EOL LF
+      - name: Configuring Git with line endings
         run: |
           git config --global core.autocrlf false
           git config --global core.eol lf
