@@ -4,9 +4,11 @@ on:
   workflow_call:
     inputs:
       node-version:
-        required: true
         type: number
         default: 16
+      os:
+        type: string
+        default: ubuntu-latest
       command-test:
         type: string
         default: npm run test
@@ -16,7 +18,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.os }}
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v3
