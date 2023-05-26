@@ -1,0 +1,102 @@
+name: Publish Edge Add-ons
+
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        required: true
+        type: number
+        default: 16
+      source-dir:
+        required: true
+        type: string
+      command-build:
+        required: true
+        type: string
+      publication-note:
+        type: string
+    secrets:
+      EDGE_PRODUCT_ID:
+        required: true
+      EDGE_CLIENT_ID:
+        required: true
+      EDGE_CLIENT_SECRET:
+        required: true
+      EDGE_ACCESS_TOKEN_URL:
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ inputs.node-version }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Test
+        run: npm run test
+
+  publish:
+    needs: build
+    environment: edge
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          cache: "npm"
+          cache-dependency-path: ./package-lock.json
+          node-version: ${{ inputs.node-version }}
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: ${{ inputs.command-build }}
+
+      - name: Create package zip
+        run: zip --recurse-paths package.zip ./web/*
+
+      - name: Get API access token
+        id: access-token
+        run: |
+          token=$(curl --request POST \
+            --header "Content-Type: application/x-www-form-urlencoded" \
+            --data "client_id=${{ secrets.EDGE_CLIENT_ID }}" \
+            --data "scope=https://api.addons.microsoftedge.microsoft.com/.default" \
+            --data "client_secret=${{ secrets.EDGE_CLIENT_SECRET }}" \
+            --data "grant_type=client_credentials" \
+            --verbose ${{ secrets.EDGE_ACCESS_TOKEN_URL }} | jq --raw-output '.access_token')
+          echo "ACCESS_TOKEN=${token}" >> "$GITHUB_OUTPUT"
+
+      - name: Upload package
+        run: |
+          curl --header "Authorization: Bearer ${{ steps.access-token.outputs.ACCESS_TOKEN }}" \
+            --header "Content-Type: application/zip" \
+            --request POST \
+            --upload-file "package.zip" \
+            --verbose "https://api.addons.microsoftedge.microsoft.com/v1/products/${{ secrets.EDGE_PRODUCT_ID }}/submissions/draft/package"
+
+      - name: Create publication note
+        id: json-note
+        run: |
+          escaped_content=$(printf '%s\n' "${{ inputs.publication-note }}" | sed 's/\\/\\\\/g; s/"/\\"/g')
+          json_data="{ \"notes\":\"$escaped_content\" }"
+          echo "JSON_NOTE=${json_data}" >> "$GITHUB_OUTPUT"
+
+      - name: Publish package
+        run: |
+          curl --header "Authorization: Bearer ${{ steps.access-token.outputs.ACCESS_TOKEN }}" \
+            --request POST \
+            --data '${{ steps.json-note.outputs.JSON_NOTE }}' \
+            --verbose \
+            https://api.addons.microsoftedge.microsoft.com/v1/products/${EDGE_PRODUCT_ID}/submissions
