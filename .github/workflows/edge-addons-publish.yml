@@ -66,7 +66,6 @@ jobs:
         run: zip --recurse-paths package.zip ${{ inputs.source-dir }}
 
       - name: Get API access token
-        id: access-token
         run: |
           token=$(curl --request POST \
             --header "Content-Type: application/x-www-form-urlencoded" \
@@ -75,11 +74,11 @@ jobs:
             --data "client_secret=${{ secrets.EDGE_CLIENT_SECRET }}" \
             --data "grant_type=client_credentials" \
             --verbose ${{ secrets.EDGE_ACCESS_TOKEN_URL }} | jq --raw-output '.access_token')
-          echo "ACCESS_TOKEN=${token}" >> "$GITHUB_OUTPUT"
+          echo "access_token=${token}" >> "$GITHUB_ENV"
 
       - name: Upload package
         run: |
-          curl --header "Authorization: Bearer ${{ steps.access-token.outputs.ACCESS_TOKEN }}" \
+          curl --header "Authorization: Bearer ${{ env.access_token }}" \
             --header "Content-Type: application/zip" \
             --request POST \
             --upload-file "package.zip" \
@@ -87,7 +86,7 @@ jobs:
 
       - name: Publish package
         run: |
-          curl --header "Authorization: Bearer ${{ steps.access-token.outputs.ACCESS_TOKEN }}" \
+          curl --header "Authorization: Bearer ${{ env.access_token }}" \
             --request POST \
             --verbose \
             https://api.addons.microsoftedge.microsoft.com/v1/products/${EDGE_PRODUCT_ID}/submissions
