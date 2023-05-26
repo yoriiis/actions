@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Deploy to Netlify
 
 on:
   workflow_call:
@@ -9,15 +9,14 @@ on:
       command-build:
         type: string
         default: npm run build
-      target-branch:
-        required: true
-        type: string
       build-dir:
         required: true
         type: string
-      keep-history:
-        type: boolean
-        default: true
+    secrets:
+      NETLIFY_APP_ID:
+        required: true
+      NETLIFY_AUTH_TOKEN:
+        required: true
 
 jobs:
   deploy:
@@ -33,17 +32,13 @@ jobs:
           node-version: ${{ inputs.node-version }}
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          npm ci
+          npm i -g netlify-cli
 
       - name: Build
         run: ${{ inputs.command-build }}
 
-      - name: Deploy to Github Pages
-        uses: crazy-max/ghaction-github-pages@v3
-        with:
-          target_branch: ${{ inputs.node-version }}
-          build_dir: ${{ inputs.build-dir }}
-          keep_history: ${{ inputs.keep-history }}
-          commit_message: "Deploy to GitHub Pages"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Deploy to Netlify
+        run: |
+          netlify deploy --prod --site ${{ secrets.NETLIFY_APP_ID }} --auth ${{ secrets.NETLIFY_AUTH_TOKEN }} --dir ${{ inputs.build-dir }} --message "Deploy to Netlify"
