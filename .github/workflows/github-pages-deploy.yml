@@ -51,9 +51,12 @@ jobs:
       - name: Build
         run: ${{ inputs.command-build }}
 
-      - name: Deploy to Github Pages
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: ${{ inputs.target-branch }}
-          publish_dir: ${{ inputs.build-dir }}
+          # Upload entire repository
+          path: ${{ inputs.build-dir }}
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
