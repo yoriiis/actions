@@ -9,15 +9,9 @@ on:
       command-build:
         type: string
         default: npm run build
-      target-branch:
-        required: true
-        type: string
       build-dir:
         required: true
         type: string
-      keep-history:
-        type: boolean
-        default: true
 
 permissions:
   contents: read
