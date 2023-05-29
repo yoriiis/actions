@@ -41,7 +41,7 @@ jobs:
       - name: Deploy to Github Pages
         uses: crazy-max/ghaction-github-pages@v3
         with:
-          target_branch: ${{ inputs.node-version }}
+          target_branch: ${{ inputs.target-branch }}
           build_dir: ${{ inputs.build-dir }}
           keep_history: ${{ inputs.keep-history }}
           commit_message: "Deploy to GitHub Pages"
