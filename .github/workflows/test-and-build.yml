@@ -23,14 +23,12 @@ jobs:
   build:
     runs-on: ${{ inputs.os }}
     timeout-minutes: 10
-    defaults:
-      run:
-        working-directory: ${{ inputs.working-directory }}
     steps:
       - name: Configuring Git with line endings
         run: |
           git config --global core.autocrlf false
           git config --global core.eol lf
+        working-directory: ${{ inputs.working-directory }}
 
       - uses: actions/checkout@v3
 
@@ -42,9 +40,12 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+        working-directory: ${{ inputs.working-directory }}
 
       - name: Test
         run: ${{ inputs.command-test }}
+        working-directory: ${{ inputs.working-directory }}
 
       - name: Build
         run: ${{ inputs.command-build }}
+        working-directory: ${{ inputs.working-directory }}
