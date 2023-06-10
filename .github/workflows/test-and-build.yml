@@ -28,7 +28,6 @@ jobs:
         run: |
           git config --global core.autocrlf false
           git config --global core.eol lf
-        working-directory: ${{ inputs.working-directory }}
 
       - uses: actions/checkout@v3
 
