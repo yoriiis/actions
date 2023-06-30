@@ -6,14 +6,34 @@ on:
       node-version:
         type: number
         default: 16
-      config-file:
+
+      # markdown
+      markdown-status:
+        type: boolean
+        default: true
+      markdown-config:
         type: string
-        default: ../../config/.markdownlint-cli2.cjs
+        default: ../../markdown/.markdownlint-cli2.js
+      markdown-files:
+        type: string
+        default: '**/*.md'
+
+      # stylelint
+      stylelint-status:
+        type: boolean
+        default: true
+      stylelint-config:
+        type: string
+        default: ../../stylelint/stylelint.config.js
+      stylelint-files:
+        type: string
+        default: \"**/*.css\"
 
 jobs:
   markdown:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    if: "${{ github.event.inputs.markdown-status == 'true' }}"
     steps:
       - uses: actions/checkout@v3
 
@@ -23,5 +43,33 @@ jobs:
           cache-dependency-path: ./package-lock.json
           node-version: ${{ inputs.node-version }}
 
-      - name: Test
-        run: npx markdownlint-cli2 '**/*.md'
+      # - name: Install dependencies
+      #   run: cd ../../markdown && npm ci
+
+      - name: Lint
+        run: npx markdownlint-cli2 --config "${{ inputs.markdown-config }}" ${{ inputs.markdown-files }}
+
+  stylelint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: "${{ github.event.inputs.stylelint-status == 'true' }}"
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          cache: "npm"
+          cache-dependency-path: ./package-lock.json
+          node-version: ${{ inputs.node-version }}
+
+      - name: Install dependencies
+        run: |
+          npm install -g stylelint@14.10.0 \
+                      stylelint-config-prettier@9.0.5 \
+                      stylelint-config-standard@27.0.0 \
+                      stylelint-prettier@2.0.0 \
+                      --save-dev
+
+      - name: Lint
+        run: npx stylelint \"./src/**/*.css\" --config ${{ inputs.stylelint-config }}
+
