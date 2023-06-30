@@ -13,7 +13,7 @@ on:
         default: true
       markdown-config:
         type: string
-        default: ../../markdown/.markdownlint-cli2.cjs
+        default: markdown/.markdownlint-cli2.cjs
       markdown-input:
         type: string
         default: '**/*.md'
@@ -24,7 +24,7 @@ on:
         default: true
       stylelint-config:
         type: string
-        default: ../../stylelint/stylelint.config.js
+        default: stylelint/stylelint.config.js
       stylelint-input:
         type: string
         default: '**/*.css'
