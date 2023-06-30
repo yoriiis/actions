@@ -1,0 +1,27 @@
+name: QA
+
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        type: number
+        default: 16
+      config-file:
+        type: string
+        default: ../../config/.markdownlint-cli2.cjs
+
+jobs:
+  markdown:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          cache: "npm"
+          cache-dependency-path: ./package-lock.json
+          node-version: ${{ inputs.node-version }}
+
+      - name: Test
+        run: npx markdownlint-cli2 '**/*.md'
