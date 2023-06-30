@@ -13,8 +13,8 @@ on:
         default: true
       markdown-config:
         type: string
-        default: ../../markdown/.markdownlint-cli2.js
-      markdown-files:
+        default: ../../markdown/.markdownlint-cli2.cjs
+      markdown-input:
         type: string
         default: '**/*.md'
 
@@ -25,9 +25,9 @@ on:
       stylelint-config:
         type: string
         default: ../../stylelint/stylelint.config.js
-      stylelint-files:
+      stylelint-input:
         type: string
-        default: \"**/*.css\"
+        default: '**/*.css'
 
 jobs:
   markdown:
@@ -47,7 +47,7 @@ jobs:
       #   run: cd ../../markdown && npm ci
 
       - name: Lint
-        run: npx markdownlint-cli2 --config "${{ inputs.markdown-config }}" ${{ inputs.markdown-files }}
+        run: npx markdownlint-cli2 --config "${{ inputs.markdown-config }}" ${{ inputs.markdown-input }}
 
   stylelint:
     runs-on: ubuntu-latest
@@ -71,5 +71,5 @@ jobs:
                       --save-dev
 
       - name: Lint
-        run: npx stylelint \"./src/**/*.css\" --config ${{ inputs.stylelint-config }}
+        run: npx stylelint ${{ inputs.stylelint-input }} --config ${{ inputs.stylelint-config }}
 
