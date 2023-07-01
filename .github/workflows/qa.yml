@@ -74,11 +74,7 @@ jobs:
           node-version: ${{ inputs.node-version }}
 
       - name: Install dependencies
-        run: |
-          npm install -g stylelint@14.10.0 \
-                      stylelint-config-prettier@9.0.5 \
-                      stylelint-config-standard@27.0.0 \
-                      stylelint-prettier@2.0.0
+        run: npm ci
 
       - name: Lint
         run: npx stylelint ${{ inputs.stylelint-input }} --config ${{ inputs.stylelint-config }}
@@ -97,17 +93,7 @@ jobs:
           node-version: ${{ inputs.node-version }}
 
       - name: Install dependencies
-        run: |
-          npm install -g @typescript-eslint/eslint-plugin@5.59.0 \
-                        @typescript-eslint/parser@5.59.0 \
-                        eslint@8.39.0 \
-                        eslint-config-prettier@8.8.0 \
-                        eslint-config-standard@17.0.0 \
-                        eslint-plugin-import@2.27.5 \
-                        eslint-plugin-n@15.7.0 \
-                        eslint-plugin-node@11.1.0 \
-                        eslint-plugin-prettier@4.2.1 \
-                        eslint-plugin-promise@6.1.1
+        run: npm ci
 
       - name: Lint
         run: npx eslint ${{ inputs.eslint-input }} --config ${{ inputs.eslint-config }}

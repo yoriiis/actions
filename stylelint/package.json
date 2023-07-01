@@ -1,8 +1,7 @@
 {
-  "lint": "stylelint \"./src/**/*.css\" --config ./config/stylelint.config.js",
-  "devDependencies": {
-    "stylelint": "^15.6.1",
-    "stylelint-config-standard": "^33.0.0",
-    "stylelint-prettier": "^3.0.0"
-  }
+	"devDependencies": {
+		"stylelint": "^15.6.1",
+		"stylelint-config-standard": "^33.0.0",
+		"stylelint-prettier": "^3.0.0"
+	}
 }
