@@ -33,8 +33,10 @@ jobs:
   markdown:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    if: "${{ github.event.inputs.markdown-status == true }}"
+    # if: "${{ github.event.inputs.markdown-status == true }}"
     steps:
+      - run: |
+          echo "Log level: ${{ inputs.markdown-status }}"
       - uses: actions/checkout@v3
 
       - uses: actions/setup-node@v3
