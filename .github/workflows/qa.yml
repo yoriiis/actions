@@ -7,28 +7,6 @@ on:
         type: number
         default: 16
 
-      # markdown
-      markdown-status:
-        type: boolean
-        default: true
-      markdown-config:
-        type: string
-        default: .markdownlint-cli2.cjs
-      markdown-input:
-        type: string
-        default: '**/*.md'
-
-      # stylelint
-      stylelint-status:
-        type: boolean
-        default: true
-      stylelint-config:
-        type: string
-        default: config/stylelint.config.js
-      stylelint-input:
-        type: string
-        default: '**/*.css'
-
       # eslint
       eslint-status:
         type: boolean
@@ -41,59 +19,12 @@ on:
         default: '.'
 
 jobs:
-  markdown:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    if: "${{ inputs.markdown-status }}"
-    steps:
-      - uses: actions/checkout@v3
-
-      - uses: actions/setup-node@v3
-        with:
-          cache: "npm"
-          cache-dependency-path: ./package-lock.json
-          node-version: ${{ inputs.node-version }}
-
-      - name: Install dependencies
-        run: cd markdownlint
-
-      - name: Lint
-        run: npx markdownlint-cli2 --config "${{ inputs.markdown-config }}" ${{ inputs.markdown-input }}
-
-  stylelint:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    if: "${{ inputs.stylelint-status }}"
-    steps:
-      - uses: actions/checkout@v3
-
-      - uses: actions/setup-node@v3
-        with:
-          cache: "npm"
-          cache-dependency-path: ./package-lock.json
-          node-version: ${{ inputs.node-version }}
-
-      - name: Install dependencies
-        run: cd stylelint && npm ci
-
-      - name: Lint
-        run: npx stylelint ${{ inputs.stylelint-input }} --config ${{ inputs.stylelint-config }}
-
   eslint:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     if: "${{ inputs.eslint-status }}"
     steps:
-      - uses: actions/checkout@v3
-
-      - uses: actions/setup-node@v3
+      - uses: yoriiis/eslint-action@main
         with:
-          cache: "npm"
-          cache-dependency-path: ./package-lock.json
-          node-version: ${{ inputs.node-version }}
-
-      - name: Install dependencies
-        run: cd eslint && npm ci
-
-      - name: Lint
-        run: npx eslint ${{ inputs.eslint-input }} --config ${{ inputs.eslint-config }}
+          config: ${{ inputs.eslint-config }}
+          input: ${{ inputs.eslint-input }}
