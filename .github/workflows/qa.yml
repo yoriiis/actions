@@ -58,7 +58,7 @@ jobs:
         run: |
           npm install \
             markdownlint-cli2@0.8.1 \
-            --global
+            --save-dev
 
       - name: Lint
         run: npx markdownlint-cli2 --config "${{ inputs.markdown-config }}" ${{ inputs.markdown-input }}
@@ -82,7 +82,7 @@ jobs:
             stylelint@15.9.0 \
             stylelint-config-standard@33.0.0 \
             stylelint-prettier@3.0.0 \
-            --global
+            --save-dev
 
       - name: Lint
         run: npx stylelint ${{ inputs.stylelint-input }} --config ${{ inputs.stylelint-config }}
