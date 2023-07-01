@@ -52,7 +52,7 @@ jobs:
   stylelint:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    # if: "${{ github.event.inputs.stylelint-status == 'true' }}"
+    if: "${{ inputs.stylelint-status }}"
     steps:
       - uses: actions/checkout@v3
 
