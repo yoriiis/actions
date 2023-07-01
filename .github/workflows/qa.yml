@@ -27,7 +27,7 @@ on:
         default: config/stylelint.config.js
       stylelint-input:
         type: string
-        default: '**/*.css'
+        default: 'src/*.css'
 
       # eslint
       eslint-status:
