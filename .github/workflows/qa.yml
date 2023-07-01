@@ -41,27 +41,27 @@ on:
         default: '.'
 
 jobs:
-  # markdown:
-  #   runs-on: ubuntu-latest
-  #   timeout-minutes: 10
-  #   if: "${{ inputs.markdown-status }}"
-  #   steps:
-  #     - uses: actions/checkout@v3
+  markdown:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: "${{ inputs.markdown-status }}"
+    steps:
+      - uses: actions/checkout@v3
 
-  #     - uses: actions/setup-node@v3
-  #       with:
-  #         cache: "npm"
-  #         cache-dependency-path: .github/workflows/qa.yml
-  #         node-version: ${{ inputs.node-version }}
+      - uses: actions/setup-node@v3
+        with:
+          cache: "npm"
+          cache-dependency-path: .github/workflows/qa.yml
+          node-version: ${{ inputs.node-version }}
 
-  #     - name: Install dependencies
-  #       run: |
-  #         npm install \
-  #           markdownlint-cli2@0.8.1 \
-  #           --global
+      - name: Install dependencies
+        run: |
+          npm install \
+            markdownlint-cli2@0.8.1 \
+            --global
 
-  #     - name: Lint
-  #       run: npx markdownlint-cli2 --config "${{ inputs.markdown-config }}" ${{ inputs.markdown-input }}
+      - name: Lint
+        run: npx markdownlint-cli2 --config "${{ inputs.markdown-config }}" ${{ inputs.markdown-input }}
 
   stylelint:
     runs-on: ubuntu-latest
@@ -87,33 +87,33 @@ jobs:
       - name: Lint
         run: npx stylelint ${{ inputs.stylelint-input }} --config ${{ inputs.stylelint-config }}
 
-  # eslint:
-  #   runs-on: ubuntu-latest
-  #   timeout-minutes: 10
-  #   if: "${{ inputs.eslint-status }}"
-  #   steps:
-  #     - uses: actions/checkout@v3
+  eslint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: "${{ inputs.eslint-status }}"
+    steps:
+      - uses: actions/checkout@v3
 
-  #     - uses: actions/setup-node@v3
-  #       with:
-  #         cache: "npm"
-  #         cache-dependency-path: .github/workflows/qa.yml
-  #         node-version: ${{ inputs.node-version }}
+      - uses: actions/setup-node@v3
+        with:
+          cache: "npm"
+          cache-dependency-path: .github/workflows/qa.yml
+          node-version: ${{ inputs.node-version }}
 
-  #     - name: Install dependencies
-  #       run: |
-  #         npm install \
-  #           @typescript-eslint/eslint-plugin@5.59.0 \
-  #           @typescript-eslint/parser@5.59.0 \
-  #           eslint@8.39.0 \
-  #           eslint-config-prettier@8.8.0 \
-  #           eslint-config-standard@17.0.0 \
-  #           eslint-plugin-import@2.27.5 \
-  #           eslint-plugin-n@15.7.0 \
-  #           eslint-plugin-node@11.1.0 \
-  #           eslint-plugin-prettier@4.2.1 \
-  #           eslint-plugin-promise@6.1.1 \
-  #           --global
+      - name: Install dependencies
+        run: |
+          npm install \
+            @typescript-eslint/eslint-plugin@5.60.1 \
+            @typescript-eslint/parser@5.60.1 \
+            eslint@8.44.0 \
+            eslint-config-prettier@8.8.0 \
+            eslint-config-standard@17.1.0 \
+            eslint-plugin-import@2.27.5 \
+            eslint-plugin-n@16.0.1 \
+            eslint-plugin-node@11.1.0 \
+            eslint-plugin-prettier@4.2.1 \
+            eslint-plugin-promise@6.1.1 \
+            --global
 
-  #     - name: Lint
-  #       run: npx eslint ${{ inputs.eslint-input }} --config ${{ inputs.eslint-config }}
+      - name: Lint
+        run: npx eslint ${{ inputs.eslint-input }} --config ${{ inputs.eslint-config }}
