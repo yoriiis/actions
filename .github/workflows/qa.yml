@@ -115,7 +115,7 @@ jobs:
             eslint-plugin-prettier@4.2.1 \
             eslint-plugin-promise@6.1.1 \
             typescript@5.0.4 \
-            --global
+            --save-dev
 
       - name: Lint
         run: npx eslint ${{ inputs.eslint-input }} --config ${{ inputs.eslint-config }}
