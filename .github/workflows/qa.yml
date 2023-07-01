@@ -103,6 +103,7 @@ jobs:
       - name: Install dependencies
         run: |
           npm install \
+            typescript@5.0.4 \
             @typescript-eslint/eslint-plugin@5.60.1 \
             @typescript-eslint/parser@5.60.1 \
             eslint@8.44.0 \
