@@ -33,7 +33,7 @@ jobs:
   markdown:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    # if: "${{ github.event.inputs.markdown-status == 'true' }}"
+    if: "${{ github.event.inputs.markdown-status == 'true' }}"
     steps:
       - uses: actions/checkout@v3
 
@@ -43,8 +43,8 @@ jobs:
           cache-dependency-path: ./package-lock.json
           node-version: ${{ inputs.node-version }}
 
-      # - name: Install dependencies
-      #   run: cd ../../markdown && npm ci
+      - name: Install dependencies
+        run: npm install -g markdownlint-cli2@0.8.1
 
       - name: Lint
         run: npx markdownlint-cli2 --config "${{ inputs.markdown-config }}" ${{ inputs.markdown-input }}
@@ -67,8 +67,7 @@ jobs:
           npm install -g stylelint@14.10.0 \
                       stylelint-config-prettier@9.0.5 \
                       stylelint-config-standard@27.0.0 \
-                      stylelint-prettier@2.0.0 \
-                      --save-dev
+                      stylelint-prettier@2.0.0
 
       - name: Lint
         run: npx stylelint ${{ inputs.stylelint-input }} --config ${{ inputs.stylelint-config }}
