@@ -38,7 +38,7 @@ on:
         default: config/.eslintrc.js
       eslint-input:
         type: string
-        default: '**/*.js'
+        default: '.'
 
 jobs:
   markdown:
