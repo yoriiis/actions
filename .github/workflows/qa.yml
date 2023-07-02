@@ -38,10 +38,10 @@ on:
         default: true
       eslint-config:
         type: string
-        default: ../../config/.eslintrc.js
+        default: config/.eslintrc.js
       eslint-input:
         type: string
-        default: '../../'
+        default: '.'
 
 jobs:
   markdown:
@@ -107,12 +107,14 @@ jobs:
 
       - name: Install dependencies
         run: |
+          cd ${{ inputs.submodules-path }}/eslint
           npm ci
           npm i eslint-config-standard@17.0.0 --save
-        working-directory: ${{ inputs.submodules-path }}/eslint
+          cd ../../
+        # working-directory: ${{ inputs.submodules-path }}/eslint
 
       - run: ls -l ${{ inputs.submodules-path }}/eslint/node_modules/.bin
 
       - name: Lint
-        run: ./node_modules/.bin/eslint ${{ inputs.eslint-input }} --config ${{ inputs.eslint-config }} --resolve-plugins-relative-to ./
-        working-directory: ${{ inputs.submodules-path }}/eslint
+        run: ${{ inputs.submodules-path }}/eslint./node_modules/.bin/eslint ${{ inputs.eslint-input }} --config ${{ inputs.eslint-config }}
+        # working-directory: ${{ inputs.submodules-path }}/eslint
