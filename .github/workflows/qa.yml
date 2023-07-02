@@ -112,5 +112,5 @@ jobs:
       - run: ls -l ${{ inputs.submodules-path }}/eslint/node_modules/.bin
 
       - name: Lint
-        run: ${{ inputs.submodules-path }}/eslint/node_modules/.bin/eslint ${{ inputs.eslint-input }} --config ${{ inputs.eslint-config }}
+        run: ./node_modules/.bin/eslint ${{ inputs.eslint-input }} --config ${{ inputs.eslint-config }}
         working-directory: ${{ inputs.submodules-path }}/eslint
