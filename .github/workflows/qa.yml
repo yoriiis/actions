@@ -110,5 +110,5 @@ jobs:
         working-directory: ${{ inputs.submodules-path }}/eslint
 
       - name: Lint
-        run: npx eslint ${{ inputs.eslint-input }} --config ${{ inputs.eslint-config }}
+        run: ${{ inputs.submodules-path }}/eslint/node_modules/.bin/eslint ${{ inputs.eslint-input }} --config ${{ inputs.eslint-config }}
         working-directory: ${{ inputs.submodules-path }}/eslint
