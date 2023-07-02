@@ -62,7 +62,7 @@ jobs:
         #     markdownlint-cli2@0.8.1 \
         #     --save-dev
         run: npm ci
-        working-directory: ./qa-actions/markdown
+        working-directory: ./qa-actions/markdownlint
 
       - name: Lint
         run: npx markdownlint-cli2 --config "${{ inputs.markdown-config }}" ${{ inputs.markdown-input }}
