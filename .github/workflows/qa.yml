@@ -47,6 +47,10 @@ jobs:
     if: "${{ inputs.markdown-status }}"
     steps:
       - uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - run: ls -l ./qa-actions
 
       - uses: actions/setup-node@v3
         with:
