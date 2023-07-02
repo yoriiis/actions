@@ -5,10 +5,7 @@ on:
     inputs:
       node-version:
         type: number
-        default: 16
-      submodules-path:
-        type: string
-        default: ./qa-actions
+        default: 18
 
       # markdown
       markdown-status:
@@ -50,22 +47,21 @@ jobs:
     if: "${{ inputs.markdown-status }}"
     steps:
       - uses: actions/checkout@v3
-        with:
-          submodules: true
 
       - uses: actions/setup-node@v3
         with:
           cache: "npm"
-          cache-dependency-path: ${{ inputs.submodules-path }}/markdownlint/package-lock.json
+          cache-dependency-path: .github/workflows/qa.yml
           node-version: ${{ inputs.node-version }}
 
       - name: Install dependencies
-        run: npm ci
-        working-directory: ${{ inputs.submodules-path }}/markdownlint
+        run: |
+          npm install \
+            markdownlint-cli2@0.8.1 \
+            --save-dev
 
       - name: Lint
         run: npx markdownlint-cli2 --config "${{ inputs.markdown-config }}" ${{ inputs.markdown-input }}
-        working-directory: ${{ inputs.submodules-path }}/markdownlint
 
   stylelint:
     runs-on: ubuntu-latest
@@ -73,22 +69,23 @@ jobs:
     if: "${{ inputs.stylelint-status }}"
     steps:
       - uses: actions/checkout@v3
-        with:
-          submodules: true
 
       - uses: actions/setup-node@v3
         with:
           cache: "npm"
-          cache-dependency-path: ${{ inputs.submodules-path }}/stylelint/package-lock.json
+          cache-dependency-path: .github/workflows/qa.yml
           node-version: ${{ inputs.node-version }}
 
       - name: Install dependencies
-        run: npm ci
-        working-directory: ${{ inputs.submodules-path }}/stylelint
+        run: |
+          npm install \
+            stylelint@15.9.0 \
+            stylelint-config-standard@33.0.0 \
+            stylelint-prettier@3.0.0 \
+            --save-dev
 
       - name: Lint
         run: npx stylelint ${{ inputs.stylelint-input }} --config ${{ inputs.stylelint-config }}
-        working-directory: ${{ inputs.submodules-path }}/stylelint
 
   eslint:
     runs-on: ubuntu-latest
@@ -96,25 +93,30 @@ jobs:
     if: "${{ inputs.eslint-status }}"
     steps:
       - uses: actions/checkout@v3
-        with:
-          submodules: true
 
       - uses: actions/setup-node@v3
         with:
           cache: "npm"
-          cache-dependency-path: ${{ inputs.submodules-path }}/eslint/package-lock.json
+          cache-dependency-path: .github/workflows/qa.yml
           node-version: ${{ inputs.node-version }}
 
       - name: Install dependencies
         run: |
-          cd ${{ inputs.submodules-path }}/eslint
-          npm ci
-          npm i eslint-config-standard@17.0.0 --save
-          cd ../../
-        # working-directory: ${{ inputs.submodules-path }}/eslint
+          npm install \
+            @typescript-eslint/eslint-plugin@5.60.1 \
+            @typescript-eslint/parser@5.60.1 \
+            eslint@8.39.0 \
+            eslint-config-prettier@8.8.0 \
+            eslint-config-standard@17.0.0 \
+            eslint-config-standard-with-typescript@36.0.0 \
+            eslint-plugin-import@2.27.5 \
+            eslint-plugin-n@15.7.0 \
+            eslint-plugin-node@11.1.0 \
+            eslint-plugin-prettier@4.2.1 \
+            eslint-plugin-promise@6.1.1 \
+            typescript@5.0.4 \
+            --save-dev
 
-      - run: ls -l ${{ inputs.submodules-path }}/eslint/node_modules/.bin
 
       - name: Lint
-        run: ${{ inputs.submodules-path }}/eslint/node_modules/.bin/eslint ${{ inputs.eslint-input }} --config ${{ inputs.eslint-config }} --resolve-plugins-relative-to ${{ inputs.submodules-path }}/eslint/node_modules
-        # working-directory: ${{ inputs.submodules-path }}/eslint
+        run: eslint ${{ inputs.eslint-input }} --config ${{ inputs.eslint-config }}
