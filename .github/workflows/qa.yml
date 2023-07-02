@@ -13,10 +13,10 @@ on:
         default: true
       markdown-config:
         type: string
-        default: ../../.markdownlint-cli2.cjs
+        default: .markdownlint-cli2.cjs
       markdown-input:
         type: string
-        default: '../../**/*.md'
+        default: '**/*.md'
 
       # stylelint
       stylelint-status:
@@ -24,10 +24,10 @@ on:
         default: true
       stylelint-config:
         type: string
-        default: ../../config/stylelint.config.js
+        default: config/stylelint.config.js
       stylelint-input:
         type: string
-        default: '../../src/**/*.css'
+        default: 'src/**/*.css'
 
       # eslint
       eslint-status:
@@ -119,4 +119,4 @@ jobs:
 
 
       - name: Lint
-        run: eslint ${{ inputs.eslint-input }} --config ${{ inputs.eslint-config }}
+        run: npx eslint ${{ inputs.eslint-input }} --config ${{ inputs.eslint-config }}
