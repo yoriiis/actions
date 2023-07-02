@@ -16,7 +16,7 @@ on:
         default: ../../.markdownlint-cli2.cjs
       markdown-input:
         type: string
-        default: '**/*.md'
+        default: '../../**/*.md'
 
       # stylelint
       stylelint-status:
