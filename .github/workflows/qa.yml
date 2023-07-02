@@ -60,10 +60,6 @@ jobs:
           node-version: ${{ inputs.node-version }}
 
       - name: Install dependencies
-        # run: |
-        #   npm install \
-        #     markdownlint-cli2@0.8.1 \
-        #     --save-dev
         run: npm ci
         working-directory: ${{ inputs.submodules-path }}/markdownlint
 
@@ -85,15 +81,12 @@ jobs:
           node-version: ${{ inputs.node-version }}
 
       - name: Install dependencies
-        run: |
-          npm install \
-            stylelint@15.9.0 \
-            stylelint-config-standard@33.0.0 \
-            stylelint-prettier@3.0.0 \
-            --save-dev
+        run: npm ci
+        working-directory: ${{ inputs.submodules-path }}/stylelint
 
       - name: Lint
         run: npx stylelint ${{ inputs.stylelint-input }} --config ${{ inputs.stylelint-config }}
+        working-directory: ${{ inputs.submodules-path }}/stylelint
 
   eslint:
     runs-on: ubuntu-latest
@@ -109,21 +102,9 @@ jobs:
           node-version: ${{ inputs.node-version }}
 
       - name: Install dependencies
-        run: |
-          npm install \
-            @typescript-eslint/eslint-plugin@5.60.1 \
-            @typescript-eslint/parser@5.60.1 \
-            eslint@8.39.0 \
-            eslint-config-prettier@8.8.0 \
-            eslint-config-standard@17.0.0 \
-            eslint-config-standard-with-typescript@36.0.0 \
-            eslint-plugin-import@2.27.5 \
-            eslint-plugin-n@15.7.0 \
-            eslint-plugin-node@11.1.0 \
-            eslint-plugin-prettier@4.2.1 \
-            eslint-plugin-promise@6.1.1 \
-            typescript@5.0.4 \
-            --save-dev
+        run: npm ci
+        working-directory: ${{ inputs.submodules-path }}/eslint
 
       - name: Lint
         run: npx eslint ${{ inputs.eslint-input }} --config ${{ inputs.eslint-config }}
+        working-directory: ${{ inputs.submodules-path }}/eslint
