@@ -6,6 +6,9 @@ on:
       node-version:
         type: number
         default: 16
+      submodules-path:
+        type: string
+        default: ./qa-actions
 
       # markdown
       markdown-status:
@@ -62,11 +65,11 @@ jobs:
         #     markdownlint-cli2@0.8.1 \
         #     --save-dev
         run: npm ci
-        working-directory: ./qa-actions/markdownlint
+        working-directory: ${{ inputs.submodules-path }}/markdownlint
 
       - name: Lint
         run: npx markdownlint-cli2 --config "${{ inputs.markdown-config }}" ${{ inputs.markdown-input }}
-        working-directory: ./qa-actions/markdownlint
+        working-directory: ${{ inputs.submodules-path }}/markdownlint
 
   stylelint:
     runs-on: ubuntu-latest
