@@ -50,22 +50,23 @@ jobs:
         with:
           submodules: true
 
-      - run: ls -l ./qa-actions
-
       - uses: actions/setup-node@v3
         with:
           cache: "npm"
-          cache-dependency-path: .github/workflows/qa.yml
+          cache-dependency-path: ./package-lock.json
           node-version: ${{ inputs.node-version }}
 
       - name: Install dependencies
-        run: |
-          npm install \
-            markdownlint-cli2@0.8.1 \
-            --save-dev
+        # run: |
+        #   npm install \
+        #     markdownlint-cli2@0.8.1 \
+        #     --save-dev
+        run: npm ci
+        working-directory: ./qa-actions/markdown
 
       - name: Lint
         run: npx markdownlint-cli2 --config "${{ inputs.markdown-config }}" ${{ inputs.markdown-input }}
+        working-directory: ./qa-actions/markdown
 
   stylelint:
     runs-on: ubuntu-latest
