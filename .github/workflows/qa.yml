@@ -13,7 +13,7 @@ on:
         default: true
       markdown-config:
         type: string
-        default: .markdownlint-cli2.cjs
+        default: ../../.markdownlint-cli2.cjs
       markdown-input:
         type: string
         default: '**/*.md'
