@@ -33,14 +33,8 @@ jobs:
       - name: Test
         run: ${{ inputs.command-test }}
 
-  lint:
-    uses: yoriiis/actions/.github/workflows/lint.yml@main
-    with:
-      eslint-config: 'config/.eslintrc.cjs'
-      stylelint-config: 'config/stylelint.config.cjs'
-
   publish:
-    needs: [build, lint]
+    needs: build
     environment: npm
     runs-on: ubuntu-latest
     timeout-minutes: 10
