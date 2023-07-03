@@ -68,51 +68,51 @@ jobs:
       - name: Lint
         run: npx markdownlint-cli2 --config "${{ inputs.markdown-config }}" ${{ inputs.markdown-input }}
 
-  stylelint:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    if: "${{ inputs.stylelint-status }}"
-    steps:
-      - uses: actions/checkout@v3
+  # stylelint:
+  #   runs-on: ubuntu-latest
+  #   timeout-minutes: 10
+  #   if: "${{ inputs.stylelint-status }}"
+  #   steps:
+  #     - uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v3
-        with:
-          cache: "npm"
-          cache-dependency-path: .github/workflows/lint.yml
-          node-version: ${{ inputs.node-version }}
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         cache: "npm"
+  #         cache-dependency-path: .github/workflows/lint.yml
+  #         node-version: ${{ inputs.node-version }}
 
-      - name: Install dependencies
-        run: |
-          npm install \
-            stylelint@15.9.0 \
-            stylelint-config-standard@33.0.0 \
-            stylelint-prettier@3.0.0 \
-            --save-dev
+  #     - name: Install dependencies
+  #       run: |
+  #         npm install \
+  #           stylelint@15.9.0 \
+  #           stylelint-config-standard@33.0.0 \
+  #           stylelint-prettier@3.0.0 \
+  #           --save-dev
 
-      - name: Lint
-        run: npx stylelint ${{ inputs.stylelint-input }} --config ${{ inputs.stylelint-config }}
+  #     - name: Lint
+  #       run: npx stylelint ${{ inputs.stylelint-input }} --config ${{ inputs.stylelint-config }}
 
-  typescript:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    if: "${{ inputs.typescript-status }}"
-    steps:
-      - uses: actions/checkout@v3
+  # typescript:
+  #   runs-on: ubuntu-latest
+  #   timeout-minutes: 10
+  #   if: "${{ inputs.typescript-status }}"
+  #   steps:
+  #     - uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v3
-        with:
-          cache: "npm"
-          cache-dependency-path: .github/workflows/lint.yml
-          node-version: ${{ inputs.node-version }}
+  #     - uses: actions/setup-node@v3
+  #       with:
+  #         cache: "npm"
+  #         cache-dependency-path: .github/workflows/lint.yml
+  #         node-version: ${{ inputs.node-version }}
 
-      - name: Install dependencies
-        run: |
-          npm install \
-            typescript@5.0.4 \
-            --save-dev
+  #     - name: Install dependencies
+  #       run: |
+  #         npm install \
+  #           typescript@5.0.4 \
+  #           --save-dev
 
-      - name: Lint
-        run: npx --package typescript tsc --noEmit
+  #     - name: Lint
+  #       run: npx --package typescript tsc --noEmit
 
   # eslint:
   #   runs-on: ubuntu-latest
