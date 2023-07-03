@@ -40,6 +40,11 @@ on:
         type: string
         default: '.'
 
+      # typescript
+      typescript-status:
+        type: boolean
+        default: true
+
 jobs:
   markdown:
     runs-on: ubuntu-latest
@@ -117,6 +122,28 @@ jobs:
             typescript@5.0.4 \
             --save-dev
 
-
       - name: Lint
         run: npx eslint ${{ inputs.eslint-input }} --config ${{ inputs.eslint-config }}
+
+  typescript:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: "${{ inputs.typescript-status }}"
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          cache: "npm"
+          cache-dependency-path: .github/workflows/qa.yml
+          node-version: ${{ inputs.node-version }}
+
+      - name: Install dependencies
+        run: |
+          npm install \
+            typescript@5.0.4 \
+            --save-dev
+
+
+      - name: Lint
+        run: npx --package typescript tsc --noEmit
