@@ -92,6 +92,28 @@ jobs:
       - name: Lint
         run: npx stylelint ${{ inputs.stylelint-input }} --config ${{ inputs.stylelint-config }}
 
+  typescript:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: "${{ inputs.typescript-status }}"
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          cache: "npm"
+          cache-dependency-path: .github/workflows/lint.yml
+          node-version: ${{ inputs.node-version }}
+
+      - name: Install dependencies
+        run: |
+          npm install \
+            typescript@5.0.4 \
+            --save-dev
+
+      - name: Lint
+        run: npx --package typescript tsc --noEmit
+
   eslint:
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -125,26 +147,3 @@ jobs:
 
       - name: Lint
         run: npx eslint ${{ inputs.eslint-input }} --config ${{ inputs.eslint-config }}
-
-  typescript:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    if: "${{ inputs.typescript-status }}"
-    steps:
-      - uses: actions/checkout@v3
-
-      - uses: actions/setup-node@v3
-        with:
-          cache: "npm"
-          cache-dependency-path: .github/workflows/lint.yml
-          node-version: ${{ inputs.node-version }}
-
-      - name: Install dependencies
-        run: |
-          npm install \
-            typescript@5.0.4 \
-            --save-dev
-
-
-      - name: Lint
-        run: npx --package typescript tsc --noEmit
