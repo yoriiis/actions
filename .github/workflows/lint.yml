@@ -56,7 +56,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           cache: "npm"
-          cache-dependency-path: .github/workflows/qa.yml
+          cache-dependency-path: .github/workflows/lint.yml
           node-version: ${{ inputs.node-version }}
 
       - name: Install dependencies
@@ -78,7 +78,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           cache: "npm"
-          cache-dependency-path: .github/workflows/qa.yml
+          cache-dependency-path: .github/workflows/lint.yml
           node-version: ${{ inputs.node-version }}
 
       - name: Install dependencies
@@ -102,7 +102,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           cache: "npm"
-          cache-dependency-path: .github/workflows/qa.yml
+          cache-dependency-path: .github/workflows/lint.yml
           node-version: ${{ inputs.node-version }}
 
       - name: Install dependencies
@@ -135,7 +135,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           cache: "npm"
-          cache-dependency-path: .github/workflows/qa.yml
+          cache-dependency-path: .github/workflows/lint.yml
           node-version: ${{ inputs.node-version }}
 
       - name: Install dependencies
