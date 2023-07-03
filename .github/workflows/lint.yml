@@ -1,4 +1,4 @@
-name: QA
+name: Lint
 
 on:
   workflow_call:
