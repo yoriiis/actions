@@ -33,8 +33,14 @@ jobs:
       - name: Test
         run: ${{ inputs.command-test }}
 
+  lint:
+    uses: yoriiis/actions/.github/workflows/lint.yml@main
+    with:
+      eslint-config: 'config/.eslintrc.cjs'
+      stylelint-config: 'config/stylelint.config.cjs'
+
   publish:
-    needs: build
+    needs: [build, lint]
     environment: npm
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -54,7 +60,7 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: NPM publish
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      # - name: NPM publish
+      #   run: npm publish
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
