@@ -6,6 +6,9 @@ on:
       node-version:
         type: number
         default: 18
+      working-directory:
+        type: string
+        default: ./
 
       # markdown
       markdown-status:
@@ -64,9 +67,11 @@ jobs:
           npm install \
             markdownlint-cli2@0.8.1 \
             --save-dev
+        working-directory: ${{ inputs.working-directory }}
 
       - name: Lint
         run: npx markdownlint-cli2 --config "${{ inputs.markdown-config }}" ${{ inputs.markdown-input }}
+        working-directory: ${{ inputs.working-directory }}
 
   stylelint:
     runs-on: ubuntu-latest
@@ -88,9 +93,11 @@ jobs:
             stylelint-config-standard@33.0.0 \
             stylelint-prettier@3.0.0 \
             --save-dev
+        working-directory: ${{ inputs.working-directory }}
 
       - name: Lint
         run: npx stylelint ${{ inputs.stylelint-input }} --config ${{ inputs.stylelint-config }}
+        working-directory: ${{ inputs.working-directory }}
 
   eslint:
     runs-on: ubuntu-latest
@@ -123,9 +130,11 @@ jobs:
             eslint-plugin-typescript-sort-keys@2.3.0 \
             typescript@5.0.4 \
             --save-dev
+        working-directory: ${{ inputs.working-directory }}
 
       - name: Lint
         run: npx eslint ${{ inputs.eslint-input }} --config ${{ inputs.eslint-config }}
+        working-directory: ${{ inputs.working-directory }}
 
   typescript:
     runs-on: ubuntu-latest
@@ -145,6 +154,8 @@ jobs:
           npm install \
             typescript@5.0.4 \
             --save-dev
+        working-directory: ${{ inputs.working-directory }}
 
       - name: Lint
         run: npx --package typescript tsc --noEmit
+        working-directory: ${{ inputs.working-directory }}
