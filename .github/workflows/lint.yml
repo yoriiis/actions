@@ -108,6 +108,7 @@ jobs:
       - name: Install dependencies
         run: |
           npm install \
+            @babel/eslint-parser@7.22.6 \
             @typescript-eslint/eslint-plugin@5.60.1 \
             @typescript-eslint/parser@5.60.1 \
             eslint@8.39.0 \
