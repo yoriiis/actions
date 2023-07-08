@@ -89,6 +89,7 @@ jobs:
       - name: Install dependencies
         run: |
           npm install \
+            prettier@2.8.7 \
             stylelint@15.9.0 \
             stylelint-config-standard@33.0.0 \
             stylelint-prettier@3.0.0 \
