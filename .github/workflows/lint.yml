@@ -66,12 +66,18 @@ jobs:
         run: |
           npm install \
             markdownlint-cli2@0.8.1 \
+            markdown-link-check@3.11.2 \
+            glob@10.3.3 \
             --save-dev
         working-directory: ${{ inputs.working-directory }}
 
       - name: Lint
         run: npx markdownlint-cli2 --config "${{ inputs.markdown-config }}" ${{ inputs.markdown-input }}
         working-directory: ${{ inputs.working-directory }}
+
+      - name: Check links
+        run: |
+          find . -name '*.md' -not -path '**/node_modules/*' -exec npx markdown-link-check {} +
 
   stylelint:
     runs-on: ubuntu-latest
