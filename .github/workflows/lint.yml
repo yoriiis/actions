@@ -51,6 +51,14 @@ on:
         type: boolean
         default: true
 
+      # publint
+      publint-status:
+        type: boolean
+        default: true
+      publint-input:
+        type: string
+        default: './'
+
 jobs:
   markdown:
     runs-on: ubuntu-latest
@@ -170,4 +178,28 @@ jobs:
 
       - name: Lint
         run: npx --package typescript tsc --noEmit
+        working-directory: ${{ inputs.working-directory }}
+
+  publint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: "${{ inputs.publint-status }}"
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          cache: "npm"
+          cache-dependency-path: .github/workflows/lint.yml
+          node-version: ${{ inputs.node-version }}
+
+      - name: Install dependencies
+        run: |
+          npm install \
+            publint@0.1.16 \
+            --save-dev
+        working-directory: ${{ inputs.working-directory }}
+
+      - name: Lint
+        run: npx publint ${{ inputs.publint-input }}
         working-directory: ${{ inputs.working-directory }}
