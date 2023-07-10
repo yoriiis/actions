@@ -195,10 +195,14 @@ jobs:
 
       - name: Install dependencies
         run: |
+          npm ci
           npm install \
             publint@0.1.16 \
             --save-dev
         working-directory: ${{ inputs.working-directory }}
+
+      - name: Build
+        run: npm run build
 
       - name: Lint
         run: npx publint ${{ inputs.publint-input }}
