@@ -13,7 +13,7 @@ on:
         type: string
         default: ./functions
     secrets:
-      VERCEL_ACCESS_TOKEN:
+      VERCEL_TOKEN:
         required: true
 
 jobs:
@@ -40,5 +40,5 @@ jobs:
 
       - name: Deploy Vercel Functions
         run: |
-          npx vercel --prod --token ${{ secrets.VERCEL_ACCESS_TOKEN }}
+          npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }}
         working-directory: ${{ inputs.working-directory }}
