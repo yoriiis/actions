@@ -21,9 +21,6 @@ on:
       setup-python:
         type: boolean
         default: false
-      env-variables:
-        type: string
-        default: echo "No env variables"
 
 jobs:
   build:
@@ -51,9 +48,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
         working-directory: ${{ inputs.working-directory }}
-
-      - name: Environment variables
-        run: ${{ inputs.env-variables }}
 
       - name: Test
         run: ${{ inputs.command-test }}
