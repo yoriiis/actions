@@ -87,6 +87,7 @@ jobs:
       - name: Publish package
         run: |
           curl --header "Authorization: Bearer ${{ env.access_token }}" \
+            --header "Content-Length: 0" \
             --request POST \
             --verbose \
             https://api.addons.microsoftedge.microsoft.com/v1/products/${EDGE_PRODUCT_ID}/submissions
