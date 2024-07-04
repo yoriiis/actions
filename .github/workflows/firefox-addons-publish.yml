@@ -59,7 +59,7 @@ jobs:
         run: ${{ inputs.command-build }}
 
       - name: Deploy to Firefox Add-ons
-        run: npx web-ext@8 sign --source-dir ${{ inputs.source-dir }}
+        run: npx web-ext sign --channel=listed --source-dir ${{ inputs.source-dir }}
         env:
           WEB_EXT_API_KEY: ${{ secrets.FIREFOX_API_KEY }}
           WEB_EXT_API_SECRET: ${{ secrets.FIREFOX_API_SECRET }}
