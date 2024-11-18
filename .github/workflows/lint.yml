@@ -177,6 +177,11 @@ jobs:
           cache-dependency-path: .github/workflows/lint.yml
           node-version: ${{ inputs.node-version }}
 
+      - name: Lint 1
+        # run: npx biome check . --config-path=${{ inputs.biome-config }}
+        run: cat package.json
+        working-directory: ${{ inputs.working-directory }}
+
       - name: Install dependencies
         run: |
           npm install \
@@ -184,7 +189,7 @@ jobs:
             --save-dev
         working-directory: ${{ inputs.working-directory }}
 
-      - name: Lint
+      - name: Lint 2
         # run: npx biome check . --config-path=${{ inputs.biome-config }}
         run: cat package.json
         working-directory: ${{ inputs.working-directory }}
