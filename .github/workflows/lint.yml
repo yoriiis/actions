@@ -52,7 +52,7 @@ on:
         default: false
       biome-config:
         type: string
-        default: config/biome.json
+        default: biome.json
 
       # typescript
       typescript-status:
