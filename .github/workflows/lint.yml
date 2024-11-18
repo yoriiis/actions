@@ -46,6 +46,14 @@ on:
         type: string
         default: '.'
 
+      # biome
+      biome-status:
+        type: boolean
+        default: false
+      biome-config:
+        type: string
+        default: biome.json
+
       # typescript
       typescript-status:
         type: boolean
@@ -154,6 +162,23 @@ jobs:
 
       - name: Lint
         run: npx eslint ${{ inputs.eslint-input }} --config ${{ inputs.eslint-config }}
+        working-directory: ${{ inputs.working-directory }}
+
+  biome:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: "${{ inputs.biome-status }}"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          cache: "npm"
+          cache-dependency-path: .github/workflows/lint.yml
+          node-version: ${{ inputs.node-version }}
+
+      - name: Lint
+        run: npx biome check --config-path=${{ inputs.eslint-config }}
         working-directory: ${{ inputs.working-directory }}
 
   typescript:
