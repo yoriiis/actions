@@ -178,7 +178,7 @@ jobs:
           node-version: ${{ inputs.node-version }}
 
       - name: Lint
-        run: npx biome check --config-path=${{ inputs.eslint-config }}
+        run: npx biome check --config-path=${{ inputs.biome-config }}
         working-directory: ${{ inputs.working-directory }}
 
   typescript:
