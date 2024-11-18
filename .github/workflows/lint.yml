@@ -184,6 +184,9 @@ jobs:
             --save-dev
         working-directory: ${{ inputs.working-directory }}
 
+      - name: Clear NPM cache
+        run: npm cache clean --force
+
       - name: Lint
         # run: npx biome check . --config-path=${{ inputs.biome-config }}
         run: cat package.json
