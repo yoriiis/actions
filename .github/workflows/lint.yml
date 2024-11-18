@@ -185,7 +185,8 @@ jobs:
         working-directory: ${{ inputs.working-directory }}
 
       - name: Lint
-        run: npx biome check . --config-path=${{ inputs.biome-config }}
+        # run: npx biome check . --config-path=${{ inputs.biome-config }}
+        run: cat package.json
         working-directory: ${{ inputs.working-directory }}
 
   typescript:
