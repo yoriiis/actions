@@ -171,21 +171,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
-        with:
-          cache: "npm"
-          cache-dependency-path: .github/workflows/lint.yml
-          node-version: ${{ inputs.node-version }}
+      # - uses: actions/setup-node@v4
+      #   with:
+      #     cache: "npm"
+      #     cache-dependency-path: .github/workflows/lint.yml
+      #     node-version: ${{ inputs.node-version }}
 
-      - name: Install dependencies
-        run: |
-          npm install \
-            @biomejs/biome@1.9.4 \
-            --save-dev
-        working-directory: ${{ inputs.working-directory }}
-
-      - name: Clear NPM cache
-        run: npm cache clean --force
+      # - name: Install dependencies
+      #   run: |
+      #     npm install \
+      #       @biomejs/biome@1.9.4 \
+      #       --save-dev
+      #   working-directory: ${{ inputs.working-directory }}
 
       - name: Lint
         # run: npx biome check . --config-path=${{ inputs.biome-config }}
