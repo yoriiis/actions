@@ -9,7 +9,7 @@ on:
       command-build:
         type: string
         default: npm run build
-      function-dir:
+      build-dir:
         required: true
         type: string
     secrets:
@@ -39,4 +39,4 @@ jobs:
 
       - name: Deploy to Netlify
         run: |
-          npx netlify deploy --prod --site ${{ secrets.NETLIFY_APP_ID }} --auth ${{ secrets.NETLIFY_AUTH_TOKEN }} --functions=${{ inputs.function-dir }} --dir=empty --message "Deploy function to Netlify"
+          npx netlify deploy --prod --site ${{ secrets.NETLIFY_APP_ID }} --auth ${{ secrets.NETLIFY_AUTH_TOKEN }} --functions=./ --dir=${{ inputs.build-dir }} --message "Deploy function to Netlify"
