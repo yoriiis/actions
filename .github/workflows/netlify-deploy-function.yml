@@ -12,6 +12,11 @@ on:
       build-dir:
         required: true
         type: string
+        default: public
+      function-dir:
+        required: true
+        type: string
+        default: ./netlify/edge-functions
     secrets:
       NETLIFY_APP_ID:
         required: true
@@ -39,4 +44,4 @@ jobs:
 
       - name: Deploy to Netlify
         run: |
-          npx netlify deploy --prod --site ${{ secrets.NETLIFY_APP_ID }} --auth ${{ secrets.NETLIFY_AUTH_TOKEN }} --functions=./netlify/edge-functions --dir=${{ inputs.build-dir }} --message "Deploy function to Netlify"
+          npx netlify deploy --prod --site ${{ secrets.NETLIFY_APP_ID }} --auth ${{ secrets.NETLIFY_AUTH_TOKEN }} --functions=${{ inputs.function-dir }} --dir=${{ inputs.build-dir }} --message "Deploy function to Netlify"
