@@ -56,3 +56,5 @@ jobs:
       - name: Build
         run: ${{ inputs.command-build }}
         working-directory: ${{ inputs.working-directory }}
+        env:
+         FIGMA_PI: ${{ secrets.FIGMA_PI }}
