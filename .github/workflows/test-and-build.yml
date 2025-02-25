@@ -56,7 +56,3 @@ jobs:
       - name: Build
         run: ${{ inputs.command-build }}
         working-directory: ${{ inputs.working-directory }}
-        # TODO: remove when project is public
-        # variables will be available with environment
-        env:
-         FIGMA_API: ${{ secrets.FIGMA_API }}
