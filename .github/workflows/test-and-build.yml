@@ -60,3 +60,4 @@ jobs:
         # variables will be available with environment
         env:
          FIGMA_API: ${{ secrets.FIGMA_API }}
+         SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
