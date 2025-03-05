@@ -18,9 +18,7 @@ on:
         required: true
       EDGE_CLIENT_ID:
         required: true
-      EDGE_CLIENT_SECRET:
-        required: true
-      EDGE_ACCESS_TOKEN_URL:
+      EDGE_API_KEY:
         required: true
 
 jobs:
@@ -65,20 +63,10 @@ jobs:
       - name: Create package zip
         run: zip --recurse-paths package.zip ${{ inputs.source-dir }}
 
-      - name: Get API access token
-        run: |
-          token=$(curl --request POST \
-            --header "Content-Type: application/x-www-form-urlencoded" \
-            --data "client_id=${{ secrets.EDGE_CLIENT_ID }}" \
-            --data "scope=https://api.addons.microsoftedge.microsoft.com/.default" \
-            --data "client_secret=${{ secrets.EDGE_CLIENT_SECRET }}" \
-            --data "grant_type=client_credentials" \
-            --verbose ${{ secrets.EDGE_ACCESS_TOKEN_URL }} | jq --raw-output '.access_token')
-          echo "access_token=${token}" >> "$GITHUB_ENV"
-
       - name: Upload package
         run: |
-          curl --header "Authorization: Bearer ${{ env.access_token }}" \
+          curl --header "Authorization: ApiKey ${{ secrets.EDGE_API_KEY }}" \
+            --header "X-ClientID: ${{ secrets.EDGE_CLIENT_ID }}" \
             --header "Content-Type: application/zip" \
             --request POST \
             --upload-file "package.zip" \
@@ -86,7 +74,8 @@ jobs:
 
       - name: Publish package
         run: |
-          curl --header "Authorization: Bearer ${{ env.access_token }}" \
+          curl --header "Authorization: ApiKey ${{ secrets.EDGE_API_KEY }}" \
+            --header "X-ClientID: ${{ secrets.EDGE_CLIENT_ID }}" \
             --header "Content-Length: 0" \
             --request POST \
             --verbose \
