@@ -94,10 +94,11 @@ jobs:
         run: npx markdownlint-cli2 --config "${{ inputs.markdown-config }}" ${{ inputs.markdown-input }}
         working-directory: ${{ inputs.working-directory }}
 
-      - name: Check links
-        if: "${{ inputs.markdown-links }}"
-        run: |
-          find . -name '*.md' -not -path '**/node_modules/*' -exec npx markdown-link-check {} +
+      # Disable, trigger 429 too many requests. To optimize
+      #- name: Check links
+      #  if: "${{ inputs.markdown-links }}"
+      #  run: |
+      #    find . -name '*.md' -not -path '**/node_modules/*' -exec npx markdown-link-check {} +
 
   stylelint:
     runs-on: ubuntu-latest
