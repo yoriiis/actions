@@ -84,8 +84,8 @@ jobs:
       - name: Install dependencies
         run: |
           npm install \
-            markdownlint-cli2@0.8.1 \
-            markdown-link-check@3.11.2 \
+            markdownlint-cli2@0.17.2 \
+            markdown-link-check@3.13.7 \
             glob@10.3.3 \
             --save-dev
         working-directory: ${{ inputs.working-directory }}
