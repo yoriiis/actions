@@ -49,6 +49,11 @@ jobs:
           node-version: ${{ inputs.node-version }}
           registry-url: https://registry.npmjs.org/
 
+      - name: Debug refs
+        run: |
+          echo "In reusable: github.ref=${{ github.ref }}"
+          echo "In reusable: github.event.release.tag_name=${{ github.event.release.tag_name }}"
+
       # Ensure npm 11.5.1 or later is installed
       - name: Update npm
         run: npm install -g npm@latest
