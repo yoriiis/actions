@@ -10,10 +10,11 @@ on:
       command-test:
         type: string
         default: npm run test
-    secrets:
-      NPM_TOKEN:
-        required: true
 
+permissions:
+  id-token: write  # Required for OIDC
+  contents: read
+  
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -56,5 +57,3 @@ jobs:
 
       - name: NPM publish
         run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
