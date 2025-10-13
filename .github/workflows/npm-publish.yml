@@ -10,6 +10,10 @@ on:
       command-test:
         type: string
         default: npm run test
+
+permissions:
+  id-token: write  # Required for OIDC
+  contents: read
   
 jobs:
   build:
