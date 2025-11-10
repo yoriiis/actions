@@ -70,9 +70,9 @@ jobs:
     timeout-minutes: 10
     if: "${{ inputs.markdown-status }}"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           cache: "npm"
           cache-dependency-path: .github/workflows/lint.yml
@@ -102,9 +102,9 @@ jobs:
     timeout-minutes: 10
     if: "${{ inputs.stylelint-status }}"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           cache: "npm"
           cache-dependency-path: .github/workflows/lint.yml
@@ -129,9 +129,9 @@ jobs:
     timeout-minutes: 10
     if: "${{ inputs.eslint-status }}"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           cache: "npm"
           cache-dependency-path: .github/workflows/lint.yml
@@ -167,9 +167,9 @@ jobs:
     timeout-minutes: 10
     if: "${{ inputs.biome-status }}"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           cache: "npm"
           cache-dependency-path: .github/workflows/lint.yml
@@ -191,9 +191,9 @@ jobs:
     timeout-minutes: 10
     if: "${{ inputs.typescript-status }}"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           cache: "npm"
           cache-dependency-path: .github/workflows/lint.yml
@@ -215,9 +215,9 @@ jobs:
     timeout-minutes: 10
     if: "${{ inputs.publint-status }}"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           cache: "npm"
           cache-dependency-path: .github/workflows/lint.yml

@@ -6,7 +6,7 @@ on:
       node-version:
         required: true
         type: number
-        default: 16
+        default: 22
       command-test:
         type: string
         default: npm run test
@@ -14,15 +14,15 @@ on:
 permissions:
   id-token: write  # Required for OIDC
   contents: read
-  
+
 jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           cache: "npm"
           cache-dependency-path: ./package-lock.json
@@ -40,9 +40,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           cache: "npm"
           cache-dependency-path: ./package-lock.json
