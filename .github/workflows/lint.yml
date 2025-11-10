@@ -50,9 +50,6 @@ on:
       biome-status:
         type: boolean
         default: false
-      biome-config:
-        type: string
-        default: biome.json
 
       # typescript
       typescript-status:
@@ -186,7 +183,7 @@ jobs:
         working-directory: ${{ inputs.working-directory }}
 
       - name: Lint
-        run: npx biome check . --config-path=${{ inputs.biome-config }}
+        run: npx biome check .
         working-directory: ${{ inputs.working-directory }}
 
   typescript:
