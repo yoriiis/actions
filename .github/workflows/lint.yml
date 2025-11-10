@@ -5,7 +5,7 @@ on:
     inputs:
       node-version:
         type: number
-        default: 18
+        default: 22
       working-directory:
         type: string
         default: ./
@@ -181,7 +181,7 @@ jobs:
       - name: Install dependencies
         run: |
           npm install \
-            @biomejs/biome@1.9.4 \
+            @biomejs/biome@2 \
             --global
         working-directory: ${{ inputs.working-directory }}
 
