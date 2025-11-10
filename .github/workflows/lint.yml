@@ -178,7 +178,7 @@ jobs:
       - name: Install dependencies
         run: |
           npm install \
-            @biomejs/biome@2 \
+            @biomejs/biome@2.3.4 \
             --global
         working-directory: ${{ inputs.working-directory }}
 
