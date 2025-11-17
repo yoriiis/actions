@@ -18,6 +18,8 @@ on:
         required: true
       FIREFOX_API_SECRET:
         required: true
+      SENTRY_DSN:
+        required: true
 
 jobs:
   build:
@@ -57,6 +59,8 @@ jobs:
 
       - name: Build
         run: ${{ inputs.command-build }}
+        env:
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
 
       - name: Deploy to Firefox Add-ons
         run: npx web-ext sign --channel=listed --source-dir ${{ inputs.source-dir }}

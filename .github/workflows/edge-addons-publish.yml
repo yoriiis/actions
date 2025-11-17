@@ -20,6 +20,8 @@ on:
         required: true
       EDGE_API_KEY:
         required: true
+      SENTRY_DSN:
+        required: true
 
 jobs:
   build:
@@ -59,6 +61,8 @@ jobs:
 
       - name: Build
         run: ${{ inputs.command-build }}
+        env:
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
 
       - name: Create package zip
         run: zip --recurse-paths package.zip ${{ inputs.source-dir }}

@@ -22,6 +22,8 @@ on:
         required: true
       CHROME_REFRESH_TOKEN:
         required: true
+      SENTRY_DSN:
+        required: true
 
 jobs:
   build:
@@ -61,6 +63,8 @@ jobs:
 
       - name: Build
         run: ${{ inputs.command-build }}
+        env:
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
 
       - name: Deploy to Chrome Web Store
         run: npx chrome-webstore-upload upload --auto-publish --source ${{ inputs.source-dir }}
