@@ -5,7 +5,7 @@ on:
     inputs:
       node-version:
         type: number
-        default: 22
+        default: 24
       working-directory:
         type: string
         default: ./
@@ -24,32 +24,10 @@ on:
         type: string
         default: '**/*.md'
 
-      # stylelint
-      stylelint-status:
-        type: boolean
-        default: true
-      stylelint-config:
-        type: string
-        default: config/stylelint.config.js
-      stylelint-input:
-        type: string
-        default: 'src/**/*.css'
-
-      # eslint
-      eslint-status:
-        type: boolean
-        default: true
-      eslint-config:
-        type: string
-        default: config/.eslintrc.js
-      eslint-input:
-        type: string
-        default: '.'
-
       # biome
       biome-status:
         type: boolean
-        default: false
+        default: true
 
       # typescript
       typescript-status:
@@ -70,12 +48,9 @@ jobs:
     timeout-minutes: 10
     if: "${{ inputs.markdown-status }}"
     steps:
-      - uses: actions/checkout@v5
-
-      - uses: actions/setup-node@v6
-        with:
-          cache: "npm"
-          cache-dependency-path: .github/workflows/lint.yml
+      - uses: ./.github/actions/checkout
+      - uses: ./.github/actions/setup-node
+        env:
           node-version: ${{ inputs.node-version }}
 
       - name: Install dependencies
@@ -97,82 +72,14 @@ jobs:
       #  run: |
       #    find . -name '*.md' -not -path '**/node_modules/*' -exec npx markdown-link-check {} +
 
-  stylelint:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    if: "${{ inputs.stylelint-status }}"
-    steps:
-      - uses: actions/checkout@v5
-
-      - uses: actions/setup-node@v6
-        with:
-          cache: "npm"
-          cache-dependency-path: .github/workflows/lint.yml
-          node-version: ${{ inputs.node-version }}
-
-      - name: Install dependencies
-        run: |
-          npm install \
-            prettier@2.8.7 \
-            stylelint@15.9.0 \
-            stylelint-config-standard@33.0.0 \
-            stylelint-prettier@3.0.0 \
-            --save-dev
-        working-directory: ${{ inputs.working-directory }}
-
-      - name: Lint
-        run: npx stylelint ${{ inputs.stylelint-input }} --config ${{ inputs.stylelint-config }}
-        working-directory: ${{ inputs.working-directory }}
-
-  eslint:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    if: "${{ inputs.eslint-status }}"
-    steps:
-      - uses: actions/checkout@v5
-
-      - uses: actions/setup-node@v6
-        with:
-          cache: "npm"
-          cache-dependency-path: .github/workflows/lint.yml
-          node-version: ${{ inputs.node-version }}
-
-      - name: Install dependencies
-        run: |
-          npm install \
-            @babel/eslint-parser@7.22.6 \
-            @typescript-eslint/eslint-plugin@5.60.1 \
-            @typescript-eslint/parser@5.60.1 \
-            eslint@8.39.0 \
-            eslint-config-prettier@8.8.0 \
-            eslint-config-standard@17.0.0 \
-            eslint-plugin-import@2.27.5 \
-            eslint-plugin-n@15.7.0 \
-            eslint-plugin-node@11.1.0 \
-            eslint-plugin-prettier@4.2.1 \
-            eslint-plugin-promise@6.1.1 \
-            eslint-plugin-react@7.32.2 \
-            eslint-plugin-typescript-sort-keys@2.3.0 \
-            prettier@2.8.7 \
-            typescript@5.0.4 \
-            --save-dev
-        working-directory: ${{ inputs.working-directory }}
-
-      - name: Lint
-        run: npx eslint ${{ inputs.eslint-input }} --config ${{ inputs.eslint-config }}
-        working-directory: ${{ inputs.working-directory }}
-
   biome:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     if: "${{ inputs.biome-status }}"
     steps:
-      - uses: actions/checkout@v5
-
-      - uses: actions/setup-node@v6
-        with:
-          cache: "npm"
-          cache-dependency-path: .github/workflows/lint.yml
+      - uses: ./.github/actions/checkout
+      - uses: ./.github/actions/setup-node
+        env:
           node-version: ${{ inputs.node-version }}
 
       - name: Install dependencies
@@ -191,12 +98,9 @@ jobs:
     timeout-minutes: 10
     if: "${{ inputs.typescript-status }}"
     steps:
-      - uses: actions/checkout@v5
-
-      - uses: actions/setup-node@v6
-        with:
-          cache: "npm"
-          cache-dependency-path: .github/workflows/lint.yml
+      - uses: ./.github/actions/checkout
+      - uses: ./.github/actions/setup-node
+        env:
           node-version: ${{ inputs.node-version }}
 
       - name: Install dependencies
@@ -215,12 +119,9 @@ jobs:
     timeout-minutes: 10
     if: "${{ inputs.publint-status }}"
     steps:
-      - uses: actions/checkout@v5
-
-      - uses: actions/setup-node@v6
-        with:
-          cache: "npm"
-          cache-dependency-path: .github/workflows/lint.yml
+      - uses: ./.github/actions/checkout
+      - uses: ./.github/actions/setup-node
+        env:
           node-version: ${{ inputs.node-version }}
 
       - name: Install dependencies

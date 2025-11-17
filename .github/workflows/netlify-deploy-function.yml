@@ -5,7 +5,7 @@ on:
     inputs:
       node-version:
         type: number
-        default: 22
+        default: 24
       command-build:
         type: string
         default: npm run build
@@ -28,12 +28,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v5
-
-      - uses: actions/setup-node@v6
-        with:
-          cache: "npm"
-          cache-dependency-path: ./package-lock.json
+      - uses: ./.github/actions/checkout
+      - uses: ./.github/actions/setup-node
+        env:
           node-version: ${{ inputs.node-version }}
 
       - name: Install dependencies

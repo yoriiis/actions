@@ -6,7 +6,7 @@ on:
       node-version:
         required: true
         type: number
-        default: 22
+        default: 24
       command-test:
         type: string
         default: npm run test
@@ -20,12 +20,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v5
-
-      - uses: actions/setup-node@v6
-        with:
-          cache: "npm"
-          cache-dependency-path: ./package-lock.json
+      - uses: ./.github/actions/checkout
+      - uses: ./.github/actions/setup-node
+        env:
           node-version: ${{ inputs.node-version }}
 
       - name: Install dependencies
@@ -40,14 +37,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v5
-
-      - uses: actions/setup-node@v6
-        with:
-          cache: "npm"
-          cache-dependency-path: ./package-lock.json
+      - uses: ./.github/actions/checkout
+      - uses: ./.github/actions/setup-node
+        env:
           node-version: ${{ inputs.node-version }}
-          registry-url: https://registry.npmjs.org/
 
       # Ensure npm 11.5.1 or later is installed
       - name: Update npm

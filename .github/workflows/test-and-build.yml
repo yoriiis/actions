@@ -5,7 +5,7 @@ on:
     inputs:
       node-version:
         type: number
-        default: 22
+        default: 24
       os:
         type: string
         default: ubuntu-latest
@@ -35,12 +35,9 @@ jobs:
           git config --global core.autocrlf false
           git config --global core.eol lf
 
-      - uses: actions/checkout@v5
-
-      - uses: actions/setup-node@v6
-        with:
-          cache: 'npm'
-          cache-dependency-path: ./package-lock.json
+      - uses: ./.github/actions/checkout
+      - uses: ./.github/actions/setup-node
+        env:
           node-version: ${{ inputs.node-version }}
 
       - uses: actions/setup-python@v4
