@@ -48,9 +48,12 @@ jobs:
     timeout-minutes: 10
     if: "${{ inputs.markdown-status }}"
     steps:
-      - uses: ./.github/actions/checkout
-      - uses: ./.github/actions/setup-node
-        env:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v6
+        with:
+          cache: 'npm'
+          cache-dependency-path: ./package-lock.json
           node-version: ${{ inputs.node-version }}
 
       - name: Install dependencies
@@ -77,9 +80,12 @@ jobs:
     timeout-minutes: 10
     if: "${{ inputs.biome-status }}"
     steps:
-      - uses: ./.github/actions/checkout
-      - uses: ./.github/actions/setup-node
-        env:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v6
+        with:
+          cache: 'npm'
+          cache-dependency-path: ./package-lock.json
           node-version: ${{ inputs.node-version }}
 
       - name: Install dependencies
@@ -98,9 +104,12 @@ jobs:
     timeout-minutes: 10
     if: "${{ inputs.typescript-status }}"
     steps:
-      - uses: ./.github/actions/checkout
-      - uses: ./.github/actions/setup-node
-        env:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v6
+        with:
+          cache: 'npm'
+          cache-dependency-path: ./package-lock.json
           node-version: ${{ inputs.node-version }}
 
       - name: Install dependencies
@@ -119,9 +128,12 @@ jobs:
     timeout-minutes: 10
     if: "${{ inputs.publint-status }}"
     steps:
-      - uses: ./.github/actions/checkout
-      - uses: ./.github/actions/setup-node
-        env:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v6
+        with:
+          cache: 'npm'
+          cache-dependency-path: ./package-lock.json
           node-version: ${{ inputs.node-version }}
 
       - name: Install dependencies

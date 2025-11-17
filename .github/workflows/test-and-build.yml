@@ -35,9 +35,12 @@ jobs:
           git config --global core.autocrlf false
           git config --global core.eol lf
 
-      - uses: ./.github/actions/checkout
-      - uses: ./.github/actions/setup-node
-        env:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v6
+        with:
+          cache: 'npm'
+          cache-dependency-path: ./package-lock.json
           node-version: ${{ inputs.node-version }}
 
       - uses: actions/setup-python@v4

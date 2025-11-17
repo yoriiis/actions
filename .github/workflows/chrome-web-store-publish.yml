@@ -30,9 +30,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: ./.github/actions/checkout
-      - uses: ./.github/actions/setup-node
-        env:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v6
+        with:
+          cache: 'npm'
+          cache-dependency-path: ./package-lock.json
           node-version: ${{ inputs.node-version }}
 
       - name: Install dependencies
@@ -47,9 +50,12 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: ./.github/actions/checkout
-      - uses: ./.github/actions/setup-node
-        env:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v6
+        with:
+          cache: 'npm'
+          cache-dependency-path: ./package-lock.json
           node-version: ${{ inputs.node-version }}
 
       - name: Install dependencies

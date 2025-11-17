@@ -1,7 +1,0 @@
-name: 'Checkout'
-description: 'Checkout command'
-
-runs:
-  using: 'composite'
-  steps:
-    - uses: actions/checkout@v5
