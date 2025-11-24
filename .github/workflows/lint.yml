@@ -48,7 +48,7 @@ jobs:
     timeout-minutes: 10
     if: "${{ inputs.markdown-status }}"
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - uses: actions/setup-node@v6
         with:
@@ -80,7 +80,7 @@ jobs:
     timeout-minutes: 10
     if: "${{ inputs.biome-status }}"
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - uses: actions/setup-node@v6
         with:
@@ -104,7 +104,7 @@ jobs:
     timeout-minutes: 10
     if: "${{ inputs.typescript-status }}"
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - uses: actions/setup-node@v6
         with:
@@ -128,7 +128,7 @@ jobs:
     timeout-minutes: 10
     if: "${{ inputs.publint-status }}"
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - uses: actions/setup-node@v6
         with:
