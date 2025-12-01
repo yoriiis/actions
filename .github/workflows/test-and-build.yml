@@ -21,12 +21,29 @@ on:
       working-directory:
         type: string
         default: ./
+      download-artifact:
+        type: boolean
+        default: false
+      upload-artifact:
+        type: boolean
+        default: false
+      outDir:
+        type: string
+        default: ./lib
 
 jobs:
   build:
     runs-on: ${{ inputs.os }}
     timeout-minutes: 10
     steps:
+      - uses: actions/download-artifact@v6
+        if: "${{ inputs.download-artifact }}"
+        with:
+          name: build-artifact
+
+      - name: Display structure of downloaded files
+        run: ls -l
+
       - name: Configuring Git with line endings
         run: |
           git config --global core.autocrlf false
@@ -51,3 +68,9 @@ jobs:
       - name: Build
         run: ${{ inputs.command-build }}
         working-directory: ${{ inputs.working-directory }}
+
+      - uses: actions/upload-artifact@v5
+        if: "${{ inputs.upload-artifact }}"
+        with:
+            name: build-artifact
+            path: ${{ inputs.outDir }}
