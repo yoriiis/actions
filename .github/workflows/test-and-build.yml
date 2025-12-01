@@ -30,6 +30,9 @@ on:
       outDir:
         type: string
         default: ./lib
+      artifact-name:
+        type: string
+        default: build-artifact
 
 jobs:
   build:
