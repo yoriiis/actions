@@ -36,6 +36,13 @@ jobs:
     runs-on: ${{ inputs.os }}
     timeout-minutes: 10
     steps:
+      - name: Configuring Git with line endings
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.eol lf
+
+      - uses: actions/checkout@v6
+
       - uses: actions/download-artifact@v6
         if: "${{ inputs.download-artifact }}"
         with:
@@ -43,13 +50,6 @@ jobs:
 
       - name: Display structure of downloaded files
         run: ls -l
-
-      - name: Configuring Git with line endings
-        run: |
-          git config --global core.autocrlf false
-          git config --global core.eol lf
-
-      - uses: actions/checkout@v6
 
       - uses: actions/setup-node@v6
         with:
