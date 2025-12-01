@@ -49,7 +49,7 @@ jobs:
       - uses: actions/download-artifact@v6
         if: "${{ inputs.download-artifact }}"
         with:
-          name: build-artifact
+          name: ${{ inputs.artifact-name }}
 
       - uses: actions/setup-node@v6
         with:
@@ -72,5 +72,5 @@ jobs:
       - uses: actions/upload-artifact@v5
         if: "${{ inputs.upload-artifact }}"
         with:
-            name: build-artifact
-            path: ${{ inputs.outDir }}
+          name: ${{ inputs.artifact-name }}
+          path: ${{ inputs.outDir }}
