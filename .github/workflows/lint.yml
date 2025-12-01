@@ -53,7 +53,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           cache: 'npm'
-          cache-dependency-path: ./package-lock.json
+          cache-dependency-path: ${{ inputs.working-directory }}/package-lock.json
           node-version: ${{ inputs.node-version }}
 
       - name: Install dependencies
@@ -85,7 +85,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           cache: 'npm'
-          cache-dependency-path: ./package-lock.json
+          cache-dependency-path: ${{ inputs.working-directory }}/package-lock.json
           node-version: ${{ inputs.node-version }}
 
       - name: Install dependencies
@@ -109,7 +109,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           cache: 'npm'
-          cache-dependency-path: ./package-lock.json
+          cache-dependency-path: ${{ inputs.working-directory }}/package-lock.json
           node-version: ${{ inputs.node-version }}
 
       - name: Install dependencies
@@ -133,7 +133,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           cache: 'npm'
-          cache-dependency-path: ./package-lock.json
+          cache-dependency-path: ${{ inputs.working-directory }}/package-lock.json
           node-version: ${{ inputs.node-version }}
 
       - name: Install dependencies

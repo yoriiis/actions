@@ -21,9 +21,6 @@ on:
       working-directory:
         type: string
         default: ./
-      setup-python:
-        type: boolean
-        default: false
 
 jobs:
   build:
@@ -40,13 +37,8 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           cache: 'npm'
-          cache-dependency-path: ./package-lock.json
+          cache-dependency-path: ${{ inputs.working-directory }}/package-lock.json
           node-version: ${{ inputs.node-version }}
-
-      - uses: actions/setup-python@v4
-        if: "${{ inputs.setup-python }}"
-        with:
-          python-version: '3.10'
 
       - name: Install dependencies
         run: ${{ inputs.command-install }}
