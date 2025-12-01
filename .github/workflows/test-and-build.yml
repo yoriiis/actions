@@ -50,6 +50,7 @@ jobs:
         if: "${{ inputs.download-artifact }}"
         with:
           name: ${{ inputs.artifact-name }}
+          path: ${{ inputs.outDir }}
 
       - uses: actions/setup-node@v6
         with:
