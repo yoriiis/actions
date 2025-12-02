@@ -42,6 +42,11 @@ on:
         type: string
         default: './'
 
+      # publint
+      packagejson-status:
+        type: boolean
+        default: true
+
 jobs:
   markdown:
     runs-on: ubuntu-latest
@@ -149,4 +154,21 @@ jobs:
 
       - name: Lint
         run: npx publint ${{ inputs.publint-input }}
+        working-directory: ${{ inputs.working-directory }}
+
+  package-json:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: "${{ inputs.packagejson-status }}"
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          cache: 'npm'
+          cache-dependency-path: ${{ inputs.working-directory }}/package-lock.json
+          node-version: ${{ inputs.node-version }}
+
+      - name: Check package.json sort
+        run: npx --yes sort-package-json --check
         working-directory: ${{ inputs.working-directory }}
