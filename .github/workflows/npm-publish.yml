@@ -4,7 +4,6 @@ on:
   workflow_call:
     inputs:
       node-version:
-        required: true
         type: number
         default: 24
       command-test:
