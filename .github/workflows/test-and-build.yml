@@ -46,7 +46,7 @@ jobs:
 
       - uses: actions/checkout@v6
 
-      - uses: actions/download-artifact@v6
+      - uses: actions/download-artifact@v7
         if: "${{ inputs.download-artifact }}"
         with:
           name: ${{ inputs.artifact-name }}
@@ -70,7 +70,7 @@ jobs:
         run: ${{ inputs.command-build }}
         working-directory: ${{ inputs.working-directory }}
 
-      - uses: actions/upload-artifact@v5
+      - uses: actions/upload-artifact@v6
         if: "${{ inputs.upload-artifact }}"
         with:
           name: ${{ inputs.artifact-name }}
