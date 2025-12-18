@@ -1,0 +1,91 @@
+name: Test & Build
+
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        type: number
+        default: 24
+      os:
+        type: string
+        default: ubuntu-latest
+      command-install-root:
+        type: string
+        default: npm ci
+      command-test-root:
+        type: string
+        default: npm run test
+      command-build-root:
+        type: string
+        default: npm run build
+      working-directory-root:
+        type: string
+        default: ./
+      command-install-demo:
+        type: string
+        default: npm ci
+      command-test-demo:
+        type: string
+        default: npm run test
+      command-build-demo:
+        type: string
+        default: npm run build
+      working-directory-demo:
+        type: string
+        default: ./demo
+
+jobs:
+  build:
+    runs-on: ${{ inputs.os }}
+    timeout-minutes: 10
+    steps:
+      - name: Configuring Git with line endings
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.eol lf
+
+      - uses: actions/checkout@v6
+
+      - uses: actions/download-artifact@v7
+        if: "${{ inputs.download-artifact }}"
+        with:
+          name: ${{ inputs.artifact-name }}
+          path: ${{ inputs.outDir }}
+
+      - name: Setup Node (root)
+        uses: actions/setup-node@v6
+        with:
+          cache: 'npm'
+          cache-dependency-path: ${{ inputs.working-directory-root }}/package-lock.json
+          node-version: ${{ inputs.node-version }}
+
+      - name: Install root dependencies
+        run: ${{ inputs.command-install-root }}
+        working-directory: ${{ inputs.working-directory-root }}
+
+      - name: Build root
+        run: ${{ inputs.command-build-root }}
+        working-directory: ${{ inputs.working-directory-root }}
+
+      - name: Test root
+        run: ${{ inputs.command-test-root }}
+        working-directory: ${{ inputs.working-directory-root }}
+
+      - name: Setup Node (demo)
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ inputs.node-version }}
+          cache: 'npm'
+          cache-dependency-path: ${{ inputs.working-directory-demo }}/package-lock.json
+
+      - name: Install demo dependencies
+        run: ${{ inputs.command-install-demo }}
+        working-directory: ${{ inputs.working-directory-demo }}
+
+      - name: Build demo
+        run: ${{ inputs.command-build-demo }}
+        working-directory: ${{ inputs.working-directory-demo }}
+
+      - name: Test demo
+        run: ${{ inputs.command-test-demo }}
+        working-directory: ${{ inputs.working-directory-demo }}
