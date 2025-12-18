@@ -12,6 +12,9 @@ on:
       working-directory-demo:
         type: string
         default: ./demo
+      extra-env:
+        required: false
+        type: string
     secrets:
       NETLIFY_APP_ID:
         required: true
@@ -33,6 +36,11 @@ jobs:
           cache: 'npm'
           cache-dependency-path: ./package-lock.json
           node-version: ${{ inputs.node-version }}
+
+      - name: Inject extra env
+        if: inputs.extra-env != ''
+        run: |
+          echo "${{ inputs.extra-env }}" >> $GITHUB_ENV
 
       - name: Install dependencies
         run: npm ci
