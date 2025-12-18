@@ -23,6 +23,8 @@ on:
         required: true
       NETLIFY_AUTH_TOKEN:
         required: true
+      EXTRA_SECRETS:
+        required: false
 
 jobs:
   e2e:
@@ -33,22 +35,22 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Inject extra env (masked)
-        if: inputs.extra-env != ''
+      - name: Inject extra env
         shell: bash
         run: |
-            # Iterate over each line KEY=VALUE
+            if [ -z "${{ secrets.EXTRA_SECRETS }}" ]; then
+                exit 0
+            fi
+
             while IFS= read -r line; do
-            [ -z "$line" ] && continue
-            key="${line%%=*}"
-            value="${line#*=}"
+                [ -z "$line" ] && continue
 
-            # Mask the value in the logs
-            echo "::add-mask::$value"
+                key="${line%%=*}"
+                value="${line#*=}"
 
-            # Export it to the environment for subsequent steps
-            echo "$key=$value" >> "$GITHUB_ENV"
-            done <<< "${{ inputs.extra-env }}"
+                echo "::add-mask::$value"
+                echo "$key=$value" >> "$GITHUB_ENV"
+            done <<< "${{ secrets.EXTRA_SECRETS }}"
 
       - uses: actions/setup-node@v6
         with:

@@ -60,8 +60,6 @@ jobs:
                 echo "$key=$value" >> "$GITHUB_ENV"
             done <<< "${{ secrets.EXTRA_SECRETS }}"
 
-      - run: echo "SENTRY_DSN=$SENTRY_DSN"
-
       - uses: actions/setup-node@v6
         with:
           cache: 'npm'
