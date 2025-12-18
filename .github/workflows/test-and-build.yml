@@ -27,9 +27,9 @@ on:
       upload-build:
         type: boolean
         default: false
+    secrets:
       extra-env:
         required: false
-        type: string
 
 jobs:
   build:
@@ -44,22 +44,17 @@ jobs:
       - uses: actions/checkout@v6
 
       - name: Inject extra env (masked)
-        if: inputs.extra-env != ''
-        shell: bash
+        if: secrets.extra-env != ''
         run: |
-            # Extract variables line by line
-            while IFS= read -r line; do
+          while IFS= read -r line; do
             [ -z "$line" ] && continue
-
             key="${line%%=*}"
             value="${line#*=}"
-
             # Mask in logs
             echo "::add-mask::$value"
-
-            # Export for following steps
+            # Export for next steps
             echo "$key=$value" >> "$GITHUB_ENV"
-            done <<< "$(printf '%s\n' "${{ inputs.extra-env }}")"
+          done <<< "${{ secrets.extra-env }}"
 
       - run: echo "SENTRY_DSN=$SENTRY_DSN"
 
