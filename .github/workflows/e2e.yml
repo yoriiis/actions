@@ -9,6 +9,9 @@ on:
       command-build:
         type: string
         default: npm run build
+      install-demo:
+        type: boolean
+        default: true
       working-directory-demo:
         type: string
         default: ./demo
@@ -50,6 +53,7 @@ jobs:
         run: ${{ inputs.command-build }}
 
       - name: Install demo dependencies
+        if: "${{ inputs.install-demo }}"
         run: npm ci --install-links
         working-directory: ${{ inputs.working-directory-demo }}
 
