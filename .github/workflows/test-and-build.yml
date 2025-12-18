@@ -21,6 +21,9 @@ on:
       working-directory:
         type: string
         default: ./
+      extra-env:
+        required: false
+        type: string
 
 jobs:
   build:
@@ -33,6 +36,11 @@ jobs:
           git config --global core.eol lf
 
       - uses: actions/checkout@v6
+
+      - name: Inject extra env
+        if: inputs.extra-env != ''
+        run: |
+          echo "${{ inputs.extra-env }}" >> $GITHUB_ENV
 
       - uses: actions/setup-node@v6
         with:
