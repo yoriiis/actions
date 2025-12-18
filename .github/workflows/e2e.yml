@@ -48,7 +48,7 @@ jobs:
 
             # Export it to the environment for subsequent steps
             echo "$key=$value" >> "$GITHUB_ENV"
-            done <<< "${{ inputs.extra_env }}"
+            done <<< "${{ inputs.extra-env }}"
 
       - uses: actions/setup-node@v6
         with:
