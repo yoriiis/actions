@@ -21,18 +21,6 @@ on:
       working-directory:
         type: string
         default: ./
-      download-artifact:
-        type: boolean
-        default: false
-      upload-artifact:
-        type: boolean
-        default: false
-      outDir:
-        type: string
-        default: ./lib
-      artifact-name:
-        type: string
-        default: build-artifact
 
 jobs:
   build:
@@ -45,12 +33,6 @@ jobs:
           git config --global core.eol lf
 
       - uses: actions/checkout@v6
-
-      - uses: actions/download-artifact@v7
-        if: "${{ inputs.download-artifact }}"
-        with:
-          name: ${{ inputs.artifact-name }}
-          path: ${{ inputs.outDir }}
 
       - uses: actions/setup-node@v6
         with:
@@ -69,9 +51,3 @@ jobs:
       - name: Test
         run: ${{ inputs.command-test }}
         working-directory: ${{ inputs.working-directory }}
-
-      - uses: actions/upload-artifact@v6
-        if: "${{ inputs.upload-artifact }}"
-        with:
-          name: ${{ inputs.artifact-name }}
-          path: ${{ inputs.outDir }}
