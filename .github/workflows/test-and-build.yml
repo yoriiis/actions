@@ -44,7 +44,7 @@ jobs:
       - uses: actions/checkout@v6
 
       - name: Inject extra env
-        if: secrets.EXTRA_SECRETS != ''
+        if: ${{ secrets.EXTRA_ENV != '' }}
         shell: bash
         run: |
             while IFS= read -r line; do
