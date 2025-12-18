@@ -47,18 +47,21 @@ jobs:
         if: inputs.extra-env != ''
         shell: bash
         run: |
-            # Iterate over each line KEY=VALUE
+            # Extract variables line by line
             while IFS= read -r line; do
             [ -z "$line" ] && continue
+
             key="${line%%=*}"
             value="${line#*=}"
 
-            # Mask the value in the logs
+            # Mask in logs
             echo "::add-mask::$value"
 
-            # Export it to the environment for subsequent steps
+            # Export for following steps
             echo "$key=$value" >> "$GITHUB_ENV"
-            done <<< "${{ inputs.extra-env }}"
+            done <<< "$(printf '%s\n' "${{ inputs.extra-env }}")"
+
+      - run: echo "SENTRY_DSN=$SENTRY_DSN"
 
       - uses: actions/setup-node@v6
         with:
