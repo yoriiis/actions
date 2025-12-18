@@ -62,12 +62,12 @@ jobs:
         run: ${{ inputs.command-install }}
         working-directory: ${{ inputs.working-directory }}
 
-      - name: Test
-        run: ${{ inputs.command-test }}
-        working-directory: ${{ inputs.working-directory }}
-
       - name: Build
         run: ${{ inputs.command-build }}
+        working-directory: ${{ inputs.working-directory }}
+
+      - name: Test
+        run: ${{ inputs.command-test }}
         working-directory: ${{ inputs.working-directory }}
 
       - uses: actions/upload-artifact@v6
