@@ -31,7 +31,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           cache: 'npm'
-          cache-dependency-path: ${{ inputs.working-directory }}/package-lock.json
+          cache-dependency-path: ./package-lock.json
           node-version: ${{ inputs.node-version }}
 
       - name: Install dependencies
@@ -43,7 +43,7 @@ jobs:
 
       - name: Install demo dependencies
         run: npm ci --install-links
-        working-directory: ${{ inputs.working-directory }}
+        working-directory: ${{ inputs.working-directory-demo }}
 
       # https://github.com/microsoft/playwright/issues/7249#issuecomment-1385567519
       - name: Store Playwright's Version
