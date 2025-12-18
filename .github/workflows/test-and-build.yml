@@ -42,6 +42,23 @@ jobs:
         run: |
           echo "${{ inputs.extra-env }}" >> $GITHUB_ENV
 
+      - name: Inject extra env (masked)
+        if: inputs.extra-env != ''
+        shell: bash
+        run: |
+            # Iterate over each line KEY=VALUE
+            while IFS= read -r line; do
+            [ -z "$line" ] && continue
+            key="${line%%=*}"
+            value="${line#*=}"
+
+            # Mask the value in the logs
+            echo "::add-mask::$value"
+
+            # Export it to the environment for subsequent steps
+            echo "$key=$value" >> "$GITHUB_ENV"
+            done <<< "${{ inputs.extra_env }}"
+
       - uses: actions/setup-node@v6
         with:
           cache: 'npm'
