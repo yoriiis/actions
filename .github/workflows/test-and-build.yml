@@ -43,11 +43,6 @@ jobs:
 
       - uses: actions/checkout@v6
 
-      - name: Inject extra env
-        if: inputs.extra-env != ''
-        run: |
-          echo "${{ inputs.extra-env }}" >> $GITHUB_ENV
-
       - name: Inject extra env (masked)
         if: inputs.extra-env != ''
         shell: bash
