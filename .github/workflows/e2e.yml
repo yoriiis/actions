@@ -107,7 +107,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: e2e
-    if: always()
+    # Secrets are unavailable on Dependabot PRs
+    if: always() && github.actor != 'dependabot[bot]'
     environment:
       name: netlify
       url: ${{ steps.deploy.outputs.url }}
