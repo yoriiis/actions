@@ -78,7 +78,7 @@ jobs:
         run: ${{ inputs.command-test }}
         working-directory: ${{ inputs.working-directory }}
 
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         if: ${{ inputs.upload-build }}
         with:
           # Upload entire repository
