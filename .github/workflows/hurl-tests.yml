@@ -1,0 +1,33 @@
+name: Hurl Tests
+
+on:
+  workflow_call:
+    inputs:
+      base_url:
+        required: true
+        type: string
+      tests_path:
+        required: false
+        type: string
+        default: tests/*.hurl
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Install hurl
+        run: npm install --no-save @orangeopensource/hurl@7
+
+      - name: Run Hurl tests
+        env:
+          BASE_URL: ${{ inputs.base_url }}
+          TESTS_PATH: ${{ inputs.tests_path }}
+        run: |
+          npx hurl --test \
+            --variable base_url=$BASE_URL \
+            --retry 5 \
+            --retry-interval 10000 \
+            $TESTS_PATH

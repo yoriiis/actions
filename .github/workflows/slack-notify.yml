@@ -1,0 +1,29 @@
+name: Slack notify
+
+on:
+  workflow_call:
+    inputs:
+      text:
+        required: true
+        type: string
+    secrets:
+      slack_webhook_url:
+        required: true
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Notify Slack
+        env:
+          TEXT: ${{ inputs.text }}
+          WEBHOOK_URL: ${{ secrets.slack_webhook_url }}
+        run: |
+          curl -X POST -H 'Content-type: application/json' \
+          --data "{
+            \"text\": \"$TEXT\"
+          }" \
+          $WEBHOOK_URL
