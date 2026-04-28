@@ -108,7 +108,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: e2e
     # Skip deploy when Dependabot or external contributor (PR from fork) — secrets unavailable
-    if: needs.e2e.result != 'cancelled' && github.actor != 'dependabot[bot]' && (github.event_name != 'pull_request' || !github.event.pull_request.head.repo.fork)
+    if: always() && needs.e2e.result != 'cancelled' && github.actor != 'dependabot[bot]' && (github.event_name != 'pull_request' || !github.event.pull_request.head.repo.fork)
     environment:
       name: netlify
       url: ${{ steps.deploy.outputs.url }}
