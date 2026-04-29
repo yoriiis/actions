@@ -33,6 +33,9 @@ on:
       working-directory-demo:
         type: string
         default: ./demo
+    secrets:
+      EXTRA_SECRETS:
+        required: false
 
 jobs:
   build:
@@ -45,6 +48,23 @@ jobs:
           git config --global core.eol lf
 
       - uses: actions/checkout@v6
+
+      - name: Inject extra secrets
+        shell: bash
+        run: |
+            if [ -z "${{ secrets.EXTRA_SECRETS }}" ]; then
+                exit 0
+            fi
+
+            while IFS= read -r line; do
+                [ -z "$line" ] && continue
+
+                key="${line%%=*}"
+                value="${line#*=}"
+
+                echo "::add-mask::$value"
+                echo "$key=$value" >> "$GITHUB_ENV"
+            done <<< "${{ secrets.EXTRA_SECRETS }}"
 
       - name: Setup Node (root)
         uses: actions/setup-node@v6
