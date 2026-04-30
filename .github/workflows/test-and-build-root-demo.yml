@@ -114,5 +114,6 @@ jobs:
         if: ${{ inputs.upload-build }}
         with:
           # Upload entire repository
+          name: upload-build
           path: ${{ inputs.build-dir }}
           retention-days: 90
