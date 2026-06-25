@@ -48,10 +48,12 @@ on:
         default: true
 
 jobs:
-  markdown:
+  lint:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
-    if: "${{ inputs.markdown-status }}"
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: ${{ inputs.working-directory }}
     steps:
       - uses: actions/checkout@v6
 
@@ -62,17 +64,11 @@ jobs:
           node-version: ${{ inputs.node-version }}
 
       - name: Install dependencies
-        run: |
-          npm install \
-            markdownlint-cli2@0.17.2 \
-            markdown-link-check@3.13.7 \
-            glob@10.3.3 \
-            --save-dev
-        working-directory: ${{ inputs.working-directory }}
+        run: npm ci
 
-      - name: Lint
+      - name: Lint markdown
+        if: ${{ inputs.markdown-status }}
         run: npx markdownlint-cli2 --config "${{ inputs.markdown-config }}" ${{ inputs.markdown-input }}
-        working-directory: ${{ inputs.working-directory }}
 
       # Disable, trigger 429 too many requests. To optimize
       #- name: Check links
@@ -80,95 +76,22 @@ jobs:
       #  run: |
       #    find . -name '*.md' -not -path '**/node_modules/*' -exec npx markdown-link-check {} +
 
-  biome:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    if: "${{ inputs.biome-status }}"
-    steps:
-      - uses: actions/checkout@v6
+      - name: Biome check
+        if: ${{ inputs.biome-status }}
+        run: npx @biomejs/biome check .
 
-      - uses: actions/setup-node@v6
-        with:
-          cache: 'npm'
-          cache-dependency-path: ${{ inputs.working-directory }}/package-lock.json
-          node-version: ${{ inputs.node-version }}
-
-      - name: Install dependencies
-        run: |
-          npm install \
-            @biomejs/biome@2.3.4 \
-            --global
-        working-directory: ${{ inputs.working-directory }}
-
-      - name: Lint
-        run: npx biome check .
-        working-directory: ${{ inputs.working-directory }}
-
-  typescript:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    if: "${{ inputs.typescript-status }}"
-    steps:
-      - uses: actions/checkout@v6
-
-      - uses: actions/setup-node@v6
-        with:
-          cache: 'npm'
-          cache-dependency-path: ${{ inputs.working-directory }}/package-lock.json
-          node-version: ${{ inputs.node-version }}
-
-      - name: Install dependencies
-        run: |
-          npm install \
-            typescript@5.6.3 \
-            --save-dev
-        working-directory: ${{ inputs.working-directory }}
-
-      - name: Lint
+      - name: TypeScript
+        if: ${{ inputs.typescript-status }}
         run: npx --package typescript tsc --noEmit
-        working-directory: ${{ inputs.working-directory }}
 
-  publint:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    if: "${{ inputs.publint-status }}"
-    steps:
-      - uses: actions/checkout@v6
-
-      - uses: actions/setup-node@v6
-        with:
-          cache: 'npm'
-          cache-dependency-path: ${{ inputs.working-directory }}/package-lock.json
-          node-version: ${{ inputs.node-version }}
-
-      - name: Install dependencies
-        run: |
-          npm ci
-          npm install \
-            publint@0.1.16 \
-            --save-dev
-        working-directory: ${{ inputs.working-directory }}
-
-      - name: Build
+      - name: Build (for publint)
+        if: ${{ inputs.publint-status }}
         run: npm run build
 
-      - name: Lint
+      - name: Publint
+        if: ${{ inputs.publint-status }}
         run: npx publint ${{ inputs.publint-input }}
-        working-directory: ${{ inputs.working-directory }}
-
-  package-json:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    if: "${{ inputs.packagejson-status }}"
-    steps:
-      - uses: actions/checkout@v6
-
-      - uses: actions/setup-node@v6
-        with:
-          cache: 'npm'
-          cache-dependency-path: ${{ inputs.working-directory }}/package-lock.json
-          node-version: ${{ inputs.node-version }}
 
       - name: Check package.json sort
+        if: ${{ inputs.packagejson-status }}
         run: npx --yes sort-package-json --check
-        working-directory: ${{ inputs.working-directory }}

@@ -9,18 +9,24 @@ on:
       command-test:
         type: string
         default: npm run test:unit
+      working-directory:
+        type: string
+        default: ./
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: ${{ inputs.working-directory }}
     steps:
       - uses: actions/checkout@v6
 
       - uses: actions/setup-node@v6
         with:
           cache: 'npm'
-          cache-dependency-path: ./package-lock.json
+          cache-dependency-path: ${{ inputs.working-directory }}/package-lock.json
           node-version: ${{ inputs.node-version }}
 
       - name: Install dependencies

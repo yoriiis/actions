@@ -15,8 +15,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v6
-
       - name: Notify Slack
         env:
           TEXT: ${{ inputs.text }}
