@@ -102,7 +102,7 @@ jobs:
       # Skip deploy when Dependabot or external contributor (PR from fork) — secrets unavailable
       - name: Deploy to Netlify
         id: deploy
-        if: ${{ !cancelled() && github.actor != 'dependabot[bot]' && (github.event_name != 'pull_request' || !github.event.pull_request.head.repo.fork) }}
+        if: ${{ !cancelled() && !startsWith(github.head_ref, 'dependabot/') && !startsWith(github.ref_name, 'dependabot/') && github.actor != 'dependabot[bot]' && (github.event_name != 'pull_request' || !github.event.pull_request.head.repo.fork) }}
         run: |
           if [ "${{ github.event_name }}" = "push" ] && [ "${{ github.ref }}" = "refs/heads/main" ]; then
             DEPLOY_ENV="production"
