@@ -68,7 +68,7 @@ jobs:
 
       - name: Lint markdown
         if: ${{ inputs.markdown-status }}
-        run: npx markdownlint-cli2 --config "${{ inputs.markdown-config }}" ${{ inputs.markdown-input }}
+        run: npx markdownlint-cli2@0.17.2 --config "${{ inputs.markdown-config }}" ${{ inputs.markdown-input }}
 
       # Disable, trigger 429 too many requests. To optimize
       #- name: Check links
@@ -78,11 +78,11 @@ jobs:
 
       - name: Biome check
         if: ${{ inputs.biome-status }}
-        run: npx @biomejs/biome check .
+        run: npx @biomejs/biome@2.3.4 check .
 
       - name: TypeScript
         if: ${{ inputs.typescript-status }}
-        run: npx --package typescript tsc --noEmit
+        run: npx --package typescript@5.6.3 tsc --noEmit
 
       - name: Build (for publint)
         if: ${{ inputs.publint-status }}
@@ -90,7 +90,7 @@ jobs:
 
       - name: Publint
         if: ${{ inputs.publint-status }}
-        run: npx publint ${{ inputs.publint-input }}
+        run: npx publint@0.1.16 ${{ inputs.publint-input }}
 
       - name: Check package.json sort
         if: ${{ inputs.packagejson-status }}
